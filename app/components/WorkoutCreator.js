@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import {DefaultRoute, RouteHandler, Link} from "react-router";
 import $ from "jquery";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -24,22 +25,22 @@ class WorkoutCreator extends Component {
 	}
 
 	onTitleChange(e) {
-		this.setState({question: e.target.value});
+		this.setState({title: e.target.value});
 	}
 
 	onAnswerChange(e) {
-		this.setState({answer: e.target.value});
+		this.setState({desciption: e.target.value});
 	}
 
 	handleSubmit(e) {
 		e.preventDefault();
-		console.log(this.state);
 		$.ajax({
 	      url: "http://localhost:3000/api/Workouts",
 	      dataType: 'json',
 	      type: 'POST',
 	      data: this.state,
 	      success: function(data) {
+	      	console.log('sucess!!!')
 	        this.setState({data: data});
 	      }.bind(this),
 	      error: function(xhr, status, err) {
@@ -54,7 +55,9 @@ class WorkoutCreator extends Component {
 				<Grid>
 					<Row className="show-grid">
 						<Col md={8} mdOffset={2}>
-							<h1>Create Workout</h1>
+							<Link to={{pathname:"/workout/test/create"}}>
+								<h1>Create Workout</h1>
+							</Link>
 							<MuiThemeProvider>
 								<form>
 									<Row className="show-grid">
@@ -71,6 +74,7 @@ class WorkoutCreator extends Component {
 										</Col>
 
 			          				</Row>
+
 									<RaisedButton label="Create" onClick={this.handleSubmit} />
 				        		</form>
 			        		</MuiThemeProvider>

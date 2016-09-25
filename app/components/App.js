@@ -9,23 +9,7 @@ class App extends Component {
 	render() {
 		return (
 			<div>
-				<WorkoutCreator />
-				<br />
-				<br />
-				<br />
-				<br />
-				<br />
-				<br />
-				<br />
-				<br />
-				<br />
-				<br />
-				<br />
-				<br />
-				<br />
-				<br />
-				<br />
-				<TestCreator />
+			
 			</div>
 		)
 	}
