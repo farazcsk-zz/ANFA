@@ -15,17 +15,14 @@ class TestCreator extends Component {
 	  this.state = {
 	  	question: '',
 	  	answer: '',
-	  	wrongAnswer1: '',
-	  	wrongAnswer2: '',
-	  	wrongAnswer3: ''
+	  	wrongAnswers: ['', '', '']
 	  };
 
 	  this.onQuestionChange = this.onQuestionChange.bind(this);
 	  this.onAnswerChange = this.onAnswerChange.bind(this);
-	  this.onWrongChange1 = this.onWrongChange1.bind(this);
-	  this.onWrongChange2 = this.onWrongChange2.bind(this);
-	  this.onWrongChange3 = this.onWrongChange3.bind(this);
+	  this.onWrongChange = this.onWrongChange.bind(this);
 	  this.handleSubmit = this.handleSubmit.bind(this);
+
 
 	}
 
@@ -37,21 +34,19 @@ class TestCreator extends Component {
 		this.setState({answer: e.target.value});
 	}
 
-	onWrongChange1(e) {
-		this.setState({wrongAnswer1: e.target.value});
+	onWrongChange(e) {
+		if (e.target.id === 'wrongAnswer1') {
+			this.setState({wrongAnswers: [e.target.value, this.state.wrongAnswers[1], this.state.wrongAnswers[2]]});
+		} else if (e.target.id === 'wrongAnswer2') {
+			this.setState({wrongAnswers: [this.state.wrongAnswers[0], e.target.value, this.state.wrongAnswers[2]]});
+		} else {
+			this.setState({wrongAnswers: [this.state.wrongAnswers[0], this.state.wrongAnswers[1], e.target.value]});
+		}
 	}
 	
-	onWrongChange2(e) {
-		this.setState({wrongAnswer2: e.target.value});
-	}
-	
-	onWrongChange3(e) {
-		this.setState({wrongAnswer3: e.target.value});
-	}
-
 	handleSubmit(e) {
+		console.log(this.state)
 		e.preventDefault();
-		console.log(this.state);
 		$.ajax({
 	      url: "http://localhost:3000/api/Tests",
 	      dataType: 'json',
@@ -89,11 +84,11 @@ class TestCreator extends Component {
 										</Col>
 
 										<Col md={6}>
-					          				<TextField id="wrong1" placeholder="Enter Wrong Answer" onChange={this.onWrongChange1}/>
+					          				<TextField id="wrongAnswer1" placeholder="Enter Wrong Answer" onChange={this.onWrongChange}/>
 					          			
-				          					<TextField id="wrong2" placeholder="Enter Wrong Answer" onChange={this.onWrongChange2}/>
+				          					<TextField id="wrongAnswer2" placeholder="Enter Wrong Answer" onChange={this.onWrongChange}/>
 
-					          				<TextField id="wrong3" placeholder="Enter Wrong Answer" onChange={this.onWrongChange3}/>
+					          				<TextField id="wrongAnswer3" placeholder="Enter Wrong Answer" onChange={this.onWrongChange}/>
 				          				</Col>
 			          				</Row>
 				          			
