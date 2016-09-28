@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import $ from "jquery";
 import {DefaultRoute, RouteHandler, Link, browserHistory} from "react-router";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Paper from 'material-ui/Paper';
@@ -12,13 +13,50 @@ class Login extends Component {
 	constructor(props) {
 	  super(props);
 	
-	  this.state = {};
+	  this.state = {
+	  	username: '',
+	  	password: ''
+	  };
+
+	  this.onUsernameChange = this.onUsernameChange.bind(this);
+	  this.onPasswordChange = this.onPasswordChange.bind(this);
 	  this.handleSubmit = this.handleSubmit.bind(this);
+	  
+	  this.errorStyle = {
+			marginTop: 10,
+			display: 'none' 
+	   }
+
+	   
 	}
 
-	handleSubmit() {
-		browserHistory.push('/workout');
+	handleSubmit(e) {
+		e.preventDefault();
+		$.ajax({
+	      url: "http://localhost:3000/api/Accounts/login",
+	      dataType: 'json',
+	      type: 'POST',
+	      data: this.state,
+	      success: function(data) {
+	      	console.log(data);
+	        this.setState({data: data});
+	        browserHistory.push('/workout');
+	      }.bind(this),
+	      error: function(xhr, status, err) {
+	        console.error(this.props.url, status, err.toString());
+	      }.bind(this)
+    	});
 	}
+
+	onUsernameChange(e) {
+		this.setState({username: e.target.value});
+	}
+
+	onPasswordChange(e) {
+		this.setState({password: e.target.value});
+	}
+
+	
 	render() {
 		const paperStyle = {
 		  height: 350,
@@ -40,11 +78,6 @@ class Login extends Component {
 		  backgroundColor: '#00bcd4'
 		};
 
-
-		const loginStyle = {
-
-		}
-
 		return (
 			<div>
 				<MuiThemeProvider>
@@ -55,13 +88,14 @@ class Login extends Component {
 									<Paper style={circlePaperStyle} zDepth={1} circle={true} />
 								</Col> 
 								<Col md={6}>
-									<TextField id="Username" placeholder="Username"/>
+									<TextField id="Username" placeholder="Username" onChange={this.onUsernameChange}/>
 									<br />
-									<TextField id="Password" placeholder="Password"/>
+									<TextField id="Password" placeholder="Password" onChange={this.onPasswordChange}/>
 								</Col>
 							</Row>
 						</Grid>
 						<RaisedButton label="Login" onClick={this.handleSubmit} />
+						<p key={this.errorDisplay} style={this.errorStyle}>Your username or password was incorrect, please try again</p>
 					</Paper>
 				</MuiThemeProvider>
 				
