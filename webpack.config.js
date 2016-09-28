@@ -4,9 +4,13 @@ var HTMLWebpackPluginConfig = new HTMLWebpackPlugin({
 	filename: 'index.html',
 	inject: 'body'
 });
+var webpack = require('webpack')
 
 module.exports = {
-	entry: __dirname + '/app/index.js',
+	entry: [
+	    'webpack-hot-middleware/client?reload=true',
+	    './app/index.js'
+  	],
 	module: {
 		loaders: [
 			{
@@ -20,5 +24,9 @@ module.exports = {
 		filename: 'transformed.js',
 		path: __dirname + '/build'
 	},
-	plugins: [HTMLWebpackPluginConfig]
+	plugins: [
+		HTMLWebpackPluginConfig,
+		new webpack.HotModuleReplacementPlugin(),
+    	new webpack.NoErrorsPlugin()
+	]
 };
