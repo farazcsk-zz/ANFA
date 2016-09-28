@@ -9,9 +9,11 @@ import Home from "./components/Home";
 
 render(
     <Router onUpdate={() => window.scrollTo(0, 0)} history={browserHistory}>
-      <Route path="/" component={Home}/>
-      <Route path="/workout/create" component={WorkoutCreator}/>
-      <Route path="/workout/test/create" component={TestCreator}/>
+      <Route path="/" component={App}>
+        <IndexRoute component={Home}/>
+        <Route path="/workout" component={WorkoutCreator}/>
+        <Route path="/test" component={TestCreator}/>
+      </Route>
     </Router>,
     document.getElementById('app')
 );
