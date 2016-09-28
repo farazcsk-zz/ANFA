@@ -9,7 +9,6 @@ injectTapEventPlugin();
 class App extends Component {
 	render() {
 		let childrenWithProps = React.cloneElement(this.props.children);
-		console.log(React.cloneElement(this.props.children));
 		return (
 			<div>
 				<MuiThemeProvider>
