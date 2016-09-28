@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {DefaultRoute, RouteHandler, Link} from "react-router";
+import {DefaultRoute, RouteHandler, Link, browserHistory} from "react-router";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
@@ -9,6 +9,16 @@ import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
 class Login extends Component {
+	constructor(props) {
+	  super(props);
+	
+	  this.state = {};
+	  this.handleSubmit = this.handleSubmit.bind(this);
+	}
+
+	handleSubmit() {
+		browserHistory.push('/workout');
+	}
 	render() {
 		const paperStyle = {
 		  height: 350,
@@ -51,6 +61,7 @@ class Login extends Component {
 								</Col>
 							</Row>
 						</Grid>
+						<RaisedButton label="Login" onClick={this.handleSubmit} />
 					</Paper>
 				</MuiThemeProvider>
 				
