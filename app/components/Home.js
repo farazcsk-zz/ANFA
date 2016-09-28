@@ -5,7 +5,15 @@ class Home extends Component {
 	render() {
 		return (
 			<div>
-				<Link to={{pathname: "/workout/create"}}>
+				<Link to={{pathname: "/workout"}}>
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
 					<h1>WORKOUT BRUH</h1>
 				</Link>
 			</div>
