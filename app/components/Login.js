@@ -39,7 +39,6 @@ class Login extends Component {
 	      data: this.state,
 	      success: function(data) {
 	      	console.log(data);
-	        this.setState({data: data});
 	        browserHistory.push('/workout');
 	      }.bind(this),
 	      error: function(xhr, status, err) {
