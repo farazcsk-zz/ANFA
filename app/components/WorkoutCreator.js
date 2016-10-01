@@ -41,7 +41,6 @@ class WorkoutCreator extends Component {
 	      data: this.state,
 	      success: function(data) {
 	      	console.log('sucess!!!')
-	        this.setState({data: data});
 	      }.bind(this),
 	      error: function(xhr, status, err) {
 	        console.error(this.props.url, status, err.toString());
