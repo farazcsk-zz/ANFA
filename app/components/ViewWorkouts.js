@@ -15,7 +15,7 @@ class ViewWorkouts extends Component {
 
 	componentDidMount() {
 		$.ajax({
-      		url: "http://localhost:3000/api/Workouts?access_token=iTk6s6Boej92VgEFrKNnvg4rqD1uXjZmAUoNtHKgIqOwxi0LpnEToMK8SKYcjXuC",
+      		url: "http://localhost:3000/api/Workouts?filter=%7B%22limit%22%3A%20%2210%22%7D&access_token=iTk6s6Boej92VgEFrKNnvg4rqD1uXjZmAUoNtHKgIqOwxi0LpnEToMK8SKYcjXuC",
       		dataType: 'json',
       		success: function(data) {
       			console.log(data)
@@ -32,18 +32,23 @@ class ViewWorkouts extends Component {
 
 		const paperStyle = {
 		  height: 100,
-		  width: 250,
+		  width: 350,
 		  margin: 5,
 		  textAlign: 'center',
 		  display: 'inline-block',
-		  border: '2px solid #36BA93'
+		  backgroundColor: 'none',
+		  border: '2px solid #36333C'
 		};
 
+		const workoutTitleStyle = {
+			textTransform: 'uppercase',
+			float: 'left'
+		}
 		var workouts = this.state.workouts.map(function(workout) {
 			return (
 				<MuiThemeProvider>
         			<Paper key={workout.id} style={paperStyle}>
-        				<p>{workout.title}</p>
+        				<h5 style={workoutTitleStyle}>{workout.title}</h5>
     				</Paper>
     			</MuiThemeProvider> 
       		); 
