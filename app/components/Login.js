@@ -39,7 +39,7 @@ class Login extends Component {
 	      data: this.state,
 	      success: function(data) {
 	      	console.log(data);
-	        browserHistory.push('/workout');
+	        browserHistory.push('/view/workouts');
 	      }.bind(this),
 	      error: function(xhr, status, err) {
 	        console.error(this.props.url, status, err.toString());
@@ -90,8 +90,10 @@ class Login extends Component {
 
 		const buttonStyles = {
 			backgroundColor: 'transparent',
-			labelColor: '#36333C',
-			rippleColor: '#36BA93'
+			rippleColor: '#36BA93',
+			labelStyle: {
+				color: '#36333C',
+			}
 		}
 
 
@@ -133,7 +135,7 @@ class Login extends Component {
 							style={borderStyle}
 							rippleColor={buttonStyles.rippleColor} 
 							backgroundColor={buttonStyles.backgroundColor} 
-							labelColor={buttonStyles.labelColor}
+							labelStyle={buttonStyles.labelStyle}
 							hoverColor={buttonStyles.backgroundColor} 
 							label="Login" 
 							onClick={this.handleSubmit} 
