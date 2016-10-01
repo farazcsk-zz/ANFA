@@ -4,7 +4,7 @@ import {DefaultRoute, RouteHandler, Link, browserHistory} from "react-router";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
@@ -66,6 +66,7 @@ class Login extends Component {
 		  paddingTop: '10vh',
 		  textAlign: 'center',
 		  display: 'inline-block',
+		  border: '2px solid #36BA93'
 		};
 
 		const circlePaperStyle = {
@@ -74,8 +75,25 @@ class Login extends Component {
 		  marginLeft: '5vw',
 		  textAlign: 'center',
 		  display: 'inline-block',
-		  backgroundColor: '#00bcd4'
+		  backgroundColor: '#36BA93'
 		};
+
+		const inputStyles = {
+		  underlineStyle: {
+		    borderColor: '#36BA93',
+		  },
+		};
+
+		const buttonStyles = {
+			backgroundColor: 'transparent',
+			labelColor: '#36333C',
+			rippleColor: '#36BA93'
+		}
+
+
+		const borderStyle = {
+			border: '2px solid #36BA93'
+		}
 
 		return (
 			<div>
@@ -87,13 +105,21 @@ class Login extends Component {
 									<Paper style={circlePaperStyle} zDepth={1} circle={true} />
 								</Col> 
 								<Col md={6}>
-									<TextField id="Username" placeholder="Username" onChange={this.onUsernameChange}/>
+									<TextField underlineFocusStyle={inputStyles.underlineStyle} id="Username" placeholder="Username" onChange={this.onUsernameChange}/>
 									<br />
-									<TextField id="Password" placeholder="Password" onChange={this.onPasswordChange}/>
+									<TextField underlineFocusStyle={inputStyles.underlineStyle} id="Password" placeholder="Password" onChange={this.onPasswordChange}/>
 								</Col>
 							</Row>
 						</Grid>
-						<RaisedButton label="Login" onClick={this.handleSubmit} />
+						<FlatButton 
+							style={borderStyle}
+							rippleColor={buttonStyles.rippleColor} 
+							backgroundColor={buttonStyles.backgroundColor} 
+							labelColor={buttonStyles.labelColor}
+							hoverColor={buttonStyles.backgroundColor} 
+							label="Login" 
+							onClick={this.handleSubmit} 
+						/>
 						<p key={this.errorDisplay} style={this.errorStyle}>Your username or password was incorrect, please try again</p>
 					</Paper>
 				</MuiThemeProvider>
