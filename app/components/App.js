@@ -22,7 +22,7 @@ class App extends Component {
 						title='ANFA' 
 						showMenuIconButton={false}
 						titleStyle={{
-							color: '#000000'
+							color: '#36333C'
 						}}
 					/>
 				</MuiThemeProvider>

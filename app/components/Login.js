@@ -73,6 +73,7 @@ class Login extends Component {
 		  height: 100,
 		  width: 100,
 		  marginLeft: '5vw',
+		  marginTop: '3.8vh',
 		  textAlign: 'center',
 		  display: 'inline-block',
 		  backgroundColor: '#36BA93'
@@ -82,6 +83,9 @@ class Login extends Component {
 		  underlineStyle: {
 		    borderColor: '#36BA93',
 		  },
+		  floatingLabelFocusStyle: {
+		  	color: '#36BA93'
+		  }
 		};
 
 		const buttonStyles = {
@@ -92,7 +96,8 @@ class Login extends Component {
 
 
 		const borderStyle = {
-			border: '2px solid #36BA93'
+			border: '2px solid #36BA93',
+			marginLeft: '9vw'
 		}
 
 		return (
@@ -105,12 +110,25 @@ class Login extends Component {
 									<Paper style={circlePaperStyle} zDepth={1} circle={true} />
 								</Col> 
 								<Col md={6}>
-									<TextField underlineFocusStyle={inputStyles.underlineStyle} id="Username" placeholder="Username" onChange={this.onUsernameChange}/>
+									<TextField 
+										underlineFocusStyle={inputStyles.underlineStyle}
+										floatingLabelFocusStyle={inputStyles.floatingLabelFocusStyle} 
+										id="Username" 
+										floatingLabelText="Username" 
+										onChange={this.onUsernameChange}
+									/>
 									<br />
-									<TextField underlineFocusStyle={inputStyles.underlineStyle} id="Password" placeholder="Password" onChange={this.onPasswordChange}/>
+									<TextField 
+										underlineFocusStyle={inputStyles.underlineStyle}
+										floatingLabelFocusStyle={inputStyles.floatingLabelFocusStyle}
+										id="Password" 
+										floatingLabelText="Password" 
+										onChange={this.onPasswordChange}
+									/>
 								</Col>
 							</Row>
 						</Grid>
+						<br />
 						<FlatButton 
 							style={borderStyle}
 							rippleColor={buttonStyles.rippleColor} 
