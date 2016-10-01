@@ -3,6 +3,7 @@ import $ from "jquery";
 import {DefaultRoute, RouteHandler, Link} from "react-router";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Paper from 'material-ui/Paper';
+import FlatButton from 'material-ui/FlatButton';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
@@ -21,7 +22,6 @@ class ViewWorkouts extends Component {
       		url: "http://localhost:3000/api/Workouts?filter=%7B%22limit%22%3A%20%2210%22%7D&access_token=iTk6s6Boej92VgEFrKNnvg4rqD1uXjZmAUoNtHKgIqOwxi0LpnEToMK8SKYcjXuC",
       		dataType: 'json',
       		success: function(data) {
-      			console.log(data)
         		this.setState({workouts: data});
       		}.bind(this),
       		error: function(xhr, status, err) {
@@ -60,11 +60,27 @@ class ViewWorkouts extends Component {
 		const controlStyle = {
 			display: 'inline-block',
 		}
+
+		const buttonStyles = {
+			backgroundColor: 'transparent',
+			rippleColor: '#36BA93',
+			labelStyle: {
+				color: '#36333C',
+			}
+		}
+
+
+		const borderStyle = {
+			border: '2px solid #36BA93',
+			display: 'inline-block',
+			float: 'right'
+		}
+
 		var workouts = this.state.workouts.map(function(workout) {
 			return (
 				<Col md={6} key={workout.id}>
 					<MuiThemeProvider>
-        				<Paper style={paperStyle}>
+        				<Paper style={paperStyle} zDepth={1}>
         					<div style={{float:'right', marginRight:15}}>
 	        					<div style={controlStyle}>
 	        						<h5>PREVIEW&nbsp;</h5>
@@ -83,7 +99,20 @@ class ViewWorkouts extends Component {
 		return (
 			<div style={viewWorkoutsStyle}>
 				<Grid>
-					<h1>Workouts</h1>
+					<h1 style={{display: 'inline-block'}}>Workouts</h1>
+					<Link to={{pathname:"/create/workout"}}>
+						<MuiThemeProvider>
+							<FlatButton 
+								style={borderStyle}
+								rippleColor={buttonStyles.rippleColor} 
+								backgroundColor={buttonStyles.backgroundColor} 
+								labelStyle={buttonStyles.labelStyle}
+								hoverColor={buttonStyles.backgroundColor} 
+								label="CREATE NEW WORKOUT" 
+								onClick={this.handleSubmit} 
+							/>
+						</MuiThemeProvider>
+					</Link>
 					<hr style={hrStyle}/>
 					<Row className="show-grid">
 						{workouts}

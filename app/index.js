@@ -13,7 +13,7 @@ render(
       <Route path="/" component={App}>
         <IndexRoute component={Home}/>
         <Route path="/view/workouts" component={ViewWorkouts}/>
-        <Route path="/workout" component={WorkoutCreator}/>
+        <Route path="/create/workout" component={WorkoutCreator}/>
         <Route path="/test" component={TestCreator}/>
       </Route>
     </Router>,
