@@ -41,7 +41,8 @@ class WorkoutCreator extends Component {
 	      type: 'POST',
 	      data: this.state,
 	      success: function(data) {
-	      	console.log('sucess!!!')
+	      	browserHistory.push('/workout/' + data.id);
+
 	      }.bind(this),
 	      error: function(xhr, status, err) {
 	        console.error(this.props.url, status, err.toString());
