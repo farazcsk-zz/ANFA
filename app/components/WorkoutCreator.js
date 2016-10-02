@@ -55,6 +55,7 @@ class WorkoutCreator extends Component {
 		  width: 800,
 		  margin: 20,
 		  marginTop: '25vh',
+		  marginBottom: '25vh',
 		  paddingTop: '10vh',
 		  textAlign: 'center',
 		  display: 'inline-block',
@@ -69,6 +70,15 @@ class WorkoutCreator extends Component {
 		  }
 		};
 
+		const clearInputStyle = {
+			float: 'left',
+			marginLeft: '5vw'
+		}
+		const hrStyle = {
+			border: '2px solid #36333C',
+			marginLeft: '5vw',
+			width: '75%'
+		}
 		const buttonStyles = {
 			backgroundColor: 'transparent',
 			rippleColor: '#36BA93',
@@ -80,8 +90,23 @@ class WorkoutCreator extends Component {
 
 		const borderStyle = {
 			border: '2px solid #36BA93',
-			marginLeft: '9vw'
+			marginBottom: '2.5vh',
+			marginTop: '7.5vh'
 		}
+
+		const darkButtonStyles = {
+			backgroundColor: 'transparent',
+			rippleColor: '#36333C',
+			labelStyle: {
+				color: '#36333C',
+			}
+		}
+
+
+		const darkBorderStyle = {
+			border: '2px solid #36333C',
+		}
+
 		return (
 			<div>
 				<Grid>
@@ -90,36 +115,45 @@ class WorkoutCreator extends Component {
 							<MuiThemeProvider>
 								<Paper style={paperStyle} zDepth={3}>
 									<Row className="show-grid">
-										<Col md={8} mdOffset={2}>
-											<form>
-					          					<TextField 
-					          						id="Title"
-					          						underlineFocusStyle={inputStyles.underlineStyle}
-													floatingLabelFocusStyle={inputStyles.floatingLabelFocusStyle} 
-					          						floatingLabelText="Enter Workout Title" 
-					          						onChange={this.onTitleChange}
-				          						/>
-							          			<br />
-							          			<br />
-							          			<br />
-					          					<TextField 
-					          						id="Desciption"
-					          						underlineFocusStyle={inputStyles.underlineStyle}
-													floatingLabelFocusStyle={inputStyles.floatingLabelFocusStyle} 
-					          						floatingLabelText="Enter Workout Description" 
-					          						onChange={this.onDesciptionChange}
-				          						/>	
-												<FlatButton 
-													label="Create"
-													style={borderStyle}
-													rippleColor={buttonStyles.rippleColor} 
-													backgroundColor={buttonStyles.backgroundColor} 
-													labelStyle={buttonStyles.labelStyle}
-													hoverColor={buttonStyles.backgroundColor} 
-													onClick={this.handleSubmit} 
-												/>
-							        		</form>
-					        			</Col>
+										<Col md={10}>
+				          					<TextField 
+				          						id="Title"
+				          						style={clearInputStyle}
+				          						underlineFocusStyle={inputStyles.underlineStyle}
+												floatingLabelFocusStyle={inputStyles.floatingLabelFocusStyle} 
+				          						floatingLabelText="Enter Workout Title" 
+				          						onChange={this.onTitleChange}
+			          						/>
+						          			<hr style={hrStyle}/>
+				          					<TextField 
+				          						id="Desciption"
+				          						style={clearInputStyle}
+				          						underlineFocusStyle={inputStyles.underlineStyle}
+												floatingLabelFocusStyle={inputStyles.floatingLabelFocusStyle} 
+				          						floatingLabelText="Enter Workout Description" 
+				          						onChange={this.onDesciptionChange}
+			          						/>
+		          						</Col>
+		          						<Col md={2}>	
+											<FlatButton 
+												label="Create"
+												style={borderStyle}
+												rippleColor={buttonStyles.rippleColor} 
+												backgroundColor={buttonStyles.backgroundColor} 
+												labelStyle={buttonStyles.labelStyle}
+												hoverColor={buttonStyles.backgroundColor} 
+												onClick={this.handleSubmit} 
+											/>
+											<FlatButton 
+												label="Cancel"
+												style={darkBorderStyle}
+												rippleColor={darkButtonStyles.rippleColor} 
+												backgroundColor={darkButtonStyles.backgroundColor} 
+												labelStyle={darkButtonStyles.labelStyle}
+												hoverColor={darkButtonStyles.backgroundColor} 
+												onClick={this.handleSubmit} 
+											/>
+										</Col>
 									</Row>
 					    		</Paper>
 				    		</MuiThemeProvider>

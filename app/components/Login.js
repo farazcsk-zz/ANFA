@@ -20,14 +20,7 @@ class Login extends Component {
 
 	  this.onUsernameChange = this.onUsernameChange.bind(this);
 	  this.onPasswordChange = this.onPasswordChange.bind(this);
-	  this.handleSubmit = this.handleSubmit.bind(this);
-	  
-	  this.errorStyle = {
-			marginTop: 10,
-			display: 'none' 
-	   }
-
-	   
+	  this.handleSubmit = this.handleSubmit.bind(this); 
 	}
 
 	handleSubmit(e) {
@@ -62,6 +55,7 @@ class Login extends Component {
 		  width: 'inherit',
 		  margin: 20,
 		  marginTop: '25vh',
+		  marginBottom: '25vh',
 		  paddingTop: '10vh',
 		  textAlign: 'center',
 		  display: 'inline-block',
@@ -140,7 +134,6 @@ class Login extends Component {
 										label="Login" 
 										onClick={this.handleSubmit} 
 									/>
-									<p key={this.errorDisplay} style={this.errorStyle}>Your username or password was incorrect, please try again</p>
 								</Paper>
 							</MuiThemeProvider>
 						</Col>
