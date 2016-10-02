@@ -49,6 +49,11 @@ class WorkoutCreator extends Component {
     	});
 	}
 
+	handleCancel(e) {
+		e.preventDefault();
+		browserHistory.push('/view/workouts');
+	}
+
 	render() {
 		const paperStyle = {
 		  height: 350,
@@ -70,10 +75,20 @@ class WorkoutCreator extends Component {
 		  }
 		};
 
-		const clearInputStyle = {
+		const titleInputStyle = {
 			float: 'left',
-			marginLeft: '5vw'
+			marginLeft: '5vw',
+			fontSize: '4vh',
+			marginTop: '4vh'
 		}
+
+		const descInputStyle = {
+			float: 'left',
+			marginLeft: '5vw',
+			fontWeight: 'lighter',
+			paddingBottom: '2vh'
+		}
+
 		const hrStyle = {
 			border: '2px solid #36333C',
 			marginLeft: '5vw',
@@ -91,7 +106,8 @@ class WorkoutCreator extends Component {
 		const borderStyle = {
 			border: '2px solid #36BA93',
 			marginBottom: '2.5vh',
-			marginTop: '7.5vh'
+			marginTop: '4.5vh',
+			marginRight: '5vw'
 		}
 
 		const darkButtonStyles = {
@@ -105,6 +121,7 @@ class WorkoutCreator extends Component {
 
 		const darkBorderStyle = {
 			border: '2px solid #36333C',
+			marginRight: '5vw'
 		}
 
 		return (
@@ -118,19 +135,21 @@ class WorkoutCreator extends Component {
 										<Col md={10}>
 				          					<TextField 
 				          						id="Title"
-				          						style={clearInputStyle}
+				          						style={titleInputStyle}
 				          						underlineFocusStyle={inputStyles.underlineStyle}
 												floatingLabelFocusStyle={inputStyles.floatingLabelFocusStyle} 
-				          						floatingLabelText="Enter Workout Title" 
+				          						placeholder="Enter Workout Title" 
+				          						underlineShow={false}
 				          						onChange={this.onTitleChange}
 			          						/>
 						          			<hr style={hrStyle}/>
 				          					<TextField 
 				          						id="Desciption"
-				          						style={clearInputStyle}
+				          						style={descInputStyle}
 				          						underlineFocusStyle={inputStyles.underlineStyle}
 												floatingLabelFocusStyle={inputStyles.floatingLabelFocusStyle} 
-				          						floatingLabelText="Enter Workout Description" 
+				          						placeholder="Enter Workout Description"
+				          						underlineShow={false} 
 				          						onChange={this.onDesciptionChange}
 			          						/>
 		          						</Col>
@@ -151,7 +170,7 @@ class WorkoutCreator extends Component {
 												backgroundColor={darkButtonStyles.backgroundColor} 
 												labelStyle={darkButtonStyles.labelStyle}
 												hoverColor={darkButtonStyles.backgroundColor} 
-												onClick={this.handleSubmit} 
+												onClick={this.handleCancel} 
 											/>
 										</Col>
 									</Row>
