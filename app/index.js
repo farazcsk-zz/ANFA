@@ -4,6 +4,7 @@ import {Router, Route, IndexRoute, browserHistory} from "react-router";
 import App from "./components/App";
 import ViewWorkouts from "./components/ViewWorkouts";
 import WorkoutCreator from "./components/WorkoutCreator";
+import Workout from "./components/Workout";
 import TestCreator from "./components/TestCreator";
 import Home from "./components/Home";
 
@@ -15,6 +16,7 @@ render(
         <Route path="/view/workouts" component={ViewWorkouts}/>
         <Route path="/create/workout" component={WorkoutCreator}/>
         <Route path="/test" component={TestCreator}/>
+        <Route path="/workout/:id" component={Workout}/>
       </Route>
     </Router>,
     document.getElementById('app')

@@ -9,11 +9,11 @@ injectTapEventPlugin();
 class App extends Component {
 	render() {
 		const style = {
-			backgroundColor: '#F3F3F3',
-			height: '100vh'
+			backgroundColor: '#F3F3F3'
 		}
 
 		let childrenWithProps = React.cloneElement(this.props.children);
+		
 		return (
 			<div style={style}>
 				<MuiThemeProvider>
