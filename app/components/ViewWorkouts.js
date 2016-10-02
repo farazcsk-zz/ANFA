@@ -75,6 +75,7 @@ class ViewWorkouts extends Component {
 			display: 'inline-block',
 			float: 'right'
 		}
+
 		var viewWorkout = function(id) {   
       		browserHistory.push('/workout/' + id);
     	}.bind(this)
@@ -83,11 +84,8 @@ class ViewWorkouts extends Component {
 			return (
 				<Col md={6} key={workout.id}>
 					<MuiThemeProvider>
-        				<Paper style={paperStyle} zDepth={1}>
+        				<Paper style={paperStyle} zDepth={1} onClick={() => viewWorkout(workout.id)}>
         					<div style={{float:'right', marginRight:15}}>
-        						<div style={controlStyle}>
-	        						<h5 onClick={() => viewWorkout(workout.id)}>EDIT&nbsp;</h5>
-	    						</div>
 	        					<div style={controlStyle}>
 	        						<h5>PREVIEW&nbsp;</h5>
 	    						</div>
