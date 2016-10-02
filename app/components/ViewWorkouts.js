@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import $ from "jquery";
-import {DefaultRoute, RouteHandler, Link} from "react-router";
+import {DefaultRoute, RouteHandler, Link, browserHistory} from "react-router";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Paper from 'material-ui/Paper';
 import FlatButton from 'material-ui/FlatButton';
@@ -75,13 +75,19 @@ class ViewWorkouts extends Component {
 			display: 'inline-block',
 			float: 'right'
 		}
-
+		var viewWorkout = function(id) {   
+      		browserHistory.push('/workout/' + id);
+    	}.bind(this)
+		
 		var workouts = this.state.workouts.map(function(workout) {
 			return (
 				<Col md={6} key={workout.id}>
 					<MuiThemeProvider>
         				<Paper style={paperStyle} zDepth={1}>
         					<div style={{float:'right', marginRight:15}}>
+        						<div style={controlStyle}>
+	        						<h5 onClick={() => viewWorkout(workout.id)}>EDIT&nbsp;</h5>
+	    						</div>
 	        					<div style={controlStyle}>
 	        						<h5>PREVIEW&nbsp;</h5>
 	    						</div>
