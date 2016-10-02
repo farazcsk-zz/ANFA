@@ -59,9 +59,8 @@ class Login extends Component {
 	render() {
 		const paperStyle = {
 		  height: 350,
-		  width: 800,
+		  width: 'inherit',
 		  margin: 20,
-		  marginLeft: '30vw',
 		  marginTop: '25vh',
 		  paddingTop: '10vh',
 		  textAlign: 'center',
@@ -104,46 +103,49 @@ class Login extends Component {
 
 		return (
 			<div>
-				<MuiThemeProvider>
-					<Paper style={paperStyle} zDepth={3}>
-						<Grid>
-							<Row className="show-grid">
-								<Col md={1}>
-									<Paper style={circlePaperStyle} zDepth={1} circle={true} />
-								</Col> 
-								<Col md={6}>
-									<TextField 
-										underlineFocusStyle={inputStyles.underlineStyle}
-										floatingLabelFocusStyle={inputStyles.floatingLabelFocusStyle} 
-										id="Username" 
-										floatingLabelText="Username" 
-										onChange={this.onUsernameChange}
-									/>
+				<Grid>
+					<Row className="show-grid">
+						<Col md={10} mdOffset={2}>
+							<MuiThemeProvider>
+								<Paper style={paperStyle} zDepth={3}>
+									<Row className="show-grid">
+										<Col md={1}>
+											<Paper style={circlePaperStyle} zDepth={1} circle={true} />
+										</Col> 
+										<Col md={6} mdOffset={2}>
+											<TextField 
+												underlineFocusStyle={inputStyles.underlineStyle}
+												floatingLabelFocusStyle={inputStyles.floatingLabelFocusStyle} 
+												id="Username" 
+												floatingLabelText="Username" 
+												onChange={this.onUsernameChange}
+											/>
+											<br />
+											<TextField 
+												underlineFocusStyle={inputStyles.underlineStyle}
+												floatingLabelFocusStyle={inputStyles.floatingLabelFocusStyle}
+												id="Password" 
+												floatingLabelText="Password" 
+												onChange={this.onPasswordChange}
+											/>
+										</Col>
+									</Row>
 									<br />
-									<TextField 
-										underlineFocusStyle={inputStyles.underlineStyle}
-										floatingLabelFocusStyle={inputStyles.floatingLabelFocusStyle}
-										id="Password" 
-										floatingLabelText="Password" 
-										onChange={this.onPasswordChange}
+									<FlatButton 
+										style={borderStyle}
+										rippleColor={buttonStyles.rippleColor} 
+										backgroundColor={buttonStyles.backgroundColor} 
+										labelStyle={buttonStyles.labelStyle}
+										hoverColor={buttonStyles.backgroundColor} 
+										label="Login" 
+										onClick={this.handleSubmit} 
 									/>
-								</Col>
-							</Row>
-						</Grid>
-						<br />
-						<FlatButton 
-							style={borderStyle}
-							rippleColor={buttonStyles.rippleColor} 
-							backgroundColor={buttonStyles.backgroundColor} 
-							labelStyle={buttonStyles.labelStyle}
-							hoverColor={buttonStyles.backgroundColor} 
-							label="Login" 
-							onClick={this.handleSubmit} 
-						/>
-						<p key={this.errorDisplay} style={this.errorStyle}>Your username or password was incorrect, please try again</p>
-					</Paper>
-				</MuiThemeProvider>
-				
+									<p key={this.errorDisplay} style={this.errorStyle}>Your username or password was incorrect, please try again</p>
+								</Paper>
+							</MuiThemeProvider>
+						</Col>
+					</Row>
+				</Grid>
 			</div>
 		)
 	}
