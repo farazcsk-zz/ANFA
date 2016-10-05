@@ -20,7 +20,7 @@ class WorkoutCreator extends Component {
 	  };
 
 	  this.onTitleChange = this.onTitleChange.bind(this);
-	  this.onAnswerChange = this.onAnswerChange.bind(this);
+	  this.onDescriptionChange = this.onDescriptionChange.bind(this);
 	  this.handleSubmit = this.handleSubmit.bind(this);
 
 	}
@@ -29,8 +29,8 @@ class WorkoutCreator extends Component {
 		this.setState({title: e.target.value});
 	}
 
-	onAnswerChange(e) {
-		this.setState({desciption: e.target.value});
+	onDescriptionChange(e) {
+		this.setState({description: e.target.value});
 	}
 
 	handleSubmit(e) {
@@ -151,7 +151,7 @@ class WorkoutCreator extends Component {
 												floatingLabelFocusStyle={inputStyles.floatingLabelFocusStyle} 
 				          						placeholder="Enter Workout Description"
 				          						underlineShow={false} 
-				          						onChange={this.onDesciptionChange}
+				          						onChange={this.onDescriptionChange}
 			          						/>
 		          						</Col>
 		          						<Col md={2}>	
