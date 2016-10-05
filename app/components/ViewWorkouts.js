@@ -39,7 +39,8 @@ class ViewWorkouts extends Component {
 		  textAlign: 'center',
 		  display: 'inline-block',
 		  backgroundColor: 'none',
-		  border: '2px solid #36333C'
+		  border: '2px solid #36333C',
+		  cursor: 'pointer'
 		};
 
 		const workoutTitleStyle = {
