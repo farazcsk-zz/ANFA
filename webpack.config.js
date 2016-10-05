@@ -24,6 +24,7 @@ module.exports = {
 	},
 	output: {
 		filename: 'transformed.js',
+		publicPath: 'http://localhost:8080/build/',
 		path: __dirname + '/build'
 	},
 	plugins: [
