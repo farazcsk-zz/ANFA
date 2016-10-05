@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import $ from "jquery";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
@@ -26,21 +27,20 @@ class SetCreator extends Component {
 	}
 
 	handleSubmit(e) {
-		console.log(this.state.set);
-		// e.preventDefault();
-		// $.ajax({
-	 //      url: "http://localhost:3000/api/Accounts/login",
-	 //      dataType: 'json',
-	 //      type: 'POST',
-	 //      data: this.state,
-	 //      success: function(data) {
-	 //      	console.log(data);
-	 //        browserHistory.push('/view/workouts');
-	 //      }.bind(this),
-	 //      error: function(xhr, status, err) {
-	 //        console.error(this.props.url, status, err.toString());
-	 //      }.bind(this)
-  //   	});
+		e.preventDefault();
+		$.ajax({
+	      url: "http://localhost:3000/api/Sets?access_token=TbZ4UnDIN1jbRJ1xzVf5mTbEGkjR2kXZjEEeYVqiwHIwgytpFsjYCklHdIrzxBCW",
+	      dataType: 'json',
+	      type: 'POST',
+	      data: this.state.set,
+	      success: function(data) {
+	      	this.props.setAdded()
+	      	this.handleClose()
+	      }.bind(this),
+	      error: function(xhr, status, err) {
+	        console.error(this.props.url, status, err.toString());
+	      }.bind(this)
+    	});
 	}
 	handleOpen() {
     	this.setState({open: true});

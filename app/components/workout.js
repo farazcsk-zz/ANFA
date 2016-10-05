@@ -13,17 +13,36 @@ class Workout extends Component {
 	  super(props);
 	
 	  this.state = {
-	  	workout: {}
+	  	workout: {
+	  		sets: []
+	  	}
 	  };
+
+	  this.setAdded = this.setAdded.bind(this);
 	}
 
 	componentDidMount() {
 		$.ajax({
-      		url: "http://localhost:3000/api/Workouts/" + this.props.params.id + "?access_token=iTk6s6Boej92VgEFrKNnvg4rqD1uXjZmAUoNtHKgIqOwxi0LpnEToMK8SKYcjXuC",
+      		url: "http://localhost:3000/api/Workouts/" + this.props.params.id +"?filter=%7B%22include%22%3A%7B%22relation%22%3A%22sets%22%7D%7D&access_token=TbZ4UnDIN1jbRJ1xzVf5mTbEGkjR2kXZjEEeYVqiwHIwgytpFsjYCklHdIrzxBCW",
       		dataType: 'json',
       		success: function(data) {
         		this.setState({workout: data});
-        		console.log(data);
+        		console.log(this.state.workout.sets);
+      		}.bind(this),
+      		error: function(xhr, status, err) {
+        		console.error('#GET Error', status, err.toString());
+      		}.bind(this)
+    	});
+	}
+
+	setAdded() {
+		console.log('kafjshgdlksjfgh')
+		$.ajax({
+      		url: "http://localhost:3000/api/Workouts/" + this.props.params.id +"?filter=%7B%22include%22%3A%7B%22relation%22%3A%22sets%22%7D%7D&access_token=TbZ4UnDIN1jbRJ1xzVf5mTbEGkjR2kXZjEEeYVqiwHIwgytpFsjYCklHdIrzxBCW",
+      		dataType: 'json',
+      		success: function(data) {
+        		this.setState({workout: data});
+        		console.log('set added');
       		}.bind(this),
       		error: function(xhr, status, err) {
         		console.error('#GET Error', status, err.toString());
@@ -36,6 +55,7 @@ class Workout extends Component {
 		  height: '100vh',
 		  width: 'inherit',
 		  margin: 20,
+		  padding: 10,
 		  display: 'inline-block',
 		  border: '2px solid #36BA93'
 		};
@@ -78,6 +98,15 @@ class Workout extends Component {
 		const hrStyle = {
 			border: '2px solid #36333C'
 		}
+
+		var sets = this.state.workout.sets.map(function(set) {
+			return (
+				<div key={set.id}>
+					 <h1>{set.title}</h1>
+    			</div>
+      		); 
+		});
+
 		return (
 			<div>
 				<Grid>
@@ -89,22 +118,18 @@ class Workout extends Component {
 										<Col md={9}>
 											<h3>{this.state.workout.title}</h3>
 											<hr style={hrStyle} />
-											<h6>{this.state.workout.description}</h6>
-											<br />
-											<br />
-											<br />
-											<br />
-											<br />
+											<h6 style={{marginBottom: '10vh'}}>{this.state.workout.description}</h6>
 											<Row className="show-grid">
 												<Col md={9}>
-													<h3>Sections</h3>
+													<h3>Sets</h3>
 												</Col>
 												<Col md={3}>
-													<SetCreator workoutId={this.state.workout.id} number={0}/>
+													<SetCreator workoutId={this.state.workout.id} number={0} setAdded={this.setAdded}/>
 												</Col>
 											</Row>
 											
 											<hr style={hrStyle} />
+											{sets}
 										</Col>
 										<Col md={3}>
 											<FlatButton 
