@@ -1,5 +1,11 @@
 import React, {Component} from "react";
 import $ from "jquery";
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import Paper from 'material-ui/Paper';
+import FlatButton from 'material-ui/FlatButton';
+import Grid from 'react-bootstrap/lib/Grid';
+import Row from 'react-bootstrap/lib/Row';
+import Col from 'react-bootstrap/lib/Col';
 
 class Workout extends Component {
 	constructor(props) {
@@ -16,6 +22,7 @@ class Workout extends Component {
       		dataType: 'json',
       		success: function(data) {
         		this.setState({workout: data});
+        		console.log(data);
       		}.bind(this),
       		error: function(xhr, status, err) {
         		console.error('#GET Error', status, err.toString());
@@ -24,9 +31,83 @@ class Workout extends Component {
 	}
 	render() {
 
+		const paperStyle = {
+		  height: '100vh',
+		  width: 'inherit',
+		  margin: 20,
+		  display: 'inline-block',
+		  border: '2px solid #36BA93'
+		};
+
+		const buttonStyles = {
+			backgroundColor: 'transparent',
+			rippleColor: '#36BA93',
+			labelStyle: {
+				color: '#36333C',
+			}
+		}
+
+		const borderStyle = {
+			border: '2px solid #36BA93',
+			marginTop: '2.5vh',
+			marginLeft: '5vw',
+			width: 'inherit'
+		}
+
+		const redButtonStyles = {
+			backgroundColor: 'transparent',
+			rippleColor: '#D0021B',
+			labelStyle: {
+				color: '#36333C',
+			}
+		}
+
+		const redBorderStyle = {
+			border: '2px solid #D0021B',
+			marginTop: '0.5vh',
+			marginLeft: '5vw',
+			width: 'inherit'
+		}
+		const hrStyle = {
+			border: '2px solid #36333C'
+		}
 		return (
 			<div>
-				<h1>{this.state.workout.title}</h1>
+				<Grid>
+					<Row className="show-grid">
+						<Col md={12}>
+							<MuiThemeProvider>
+								<Paper style={paperStyle}>
+									<Row className="show-grid">
+										<Col md={9}>
+											<h3>{this.state.workout.title}</h3>
+											<hr style={hrStyle} />
+											<h6>{this.state.workout.description}</h6>
+										</Col>
+										<Col md={3}>
+											<FlatButton 
+												label="Edit"
+												style={borderStyle}
+												rippleColor={buttonStyles.rippleColor} 
+												backgroundColor={buttonStyles.backgroundColor} 
+												labelStyle={buttonStyles.labelStyle}
+												hoverColor={buttonStyles.backgroundColor}  
+											/>
+											<FlatButton 
+												label="Delete"
+												style={redBorderStyle}
+												rippleColor={redButtonStyles.rippleColor} 
+												backgroundColor={redButtonStyles.backgroundColor} 
+												labelStyle={redButtonStyles.labelStyle}
+												hoverColor={redButtonStyles.backgroundColor}  
+											/>
+										</Col>
+									</Row>
+								</Paper>
+							</MuiThemeProvider>
+						</Col>	
+					</Row>	
+				</Grid>
 			</div>
 		)
 	}
