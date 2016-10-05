@@ -13,13 +13,35 @@ class SetCreator extends Component {
 	  super(props);
 	
 	  this.state = {
-	  	open: false
+	  	open: false,
+	  	set: {
+	  		title: ''
+	  	}
 	  };
 
 	  this.handleOpen = this.handleOpen.bind(this);
 	  this.handleClose = this.handleClose.bind(this);
+	  this.onTitleChange = this.onTitleChange.bind(this);
+	  this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
+	handleSubmit(e) {
+		console.log(this.state.set);
+		// e.preventDefault();
+		// $.ajax({
+	 //      url: "http://localhost:3000/api/Accounts/login",
+	 //      dataType: 'json',
+	 //      type: 'POST',
+	 //      data: this.state,
+	 //      success: function(data) {
+	 //      	console.log(data);
+	 //        browserHistory.push('/view/workouts');
+	 //      }.bind(this),
+	 //      error: function(xhr, status, err) {
+	 //        console.error(this.props.url, status, err.toString());
+	 //      }.bind(this)
+  //   	});
+	}
 	handleOpen() {
     	this.setState({open: true});
  	};
@@ -27,6 +49,10 @@ class SetCreator extends Component {
   	handleClose() {
     	this.setState({open: false});
  	};
+
+ 	onTitleChange(e) {
+		this.setState({set: {title: e.target.value, number: this.props.number, workoutId: this.props.workoutId}});
+	}
 
 	render() {
 		const buttonStyles = {
@@ -41,6 +67,15 @@ class SetCreator extends Component {
 			border: '2px solid #36BA93',
 			float: 'right'
 		}
+
+		const inputStyles = {
+		  underlineStyle: {
+		    borderColor: '#36BA93',
+		  },
+		  floatingLabelFocusStyle: {
+		  	color: '#36BA93'
+		  }
+		};
 		
 		return (
 			<div>
@@ -54,12 +89,27 @@ class SetCreator extends Component {
 					onClick={this.handleOpen}  
 				/>
 				<Dialog
-		          title="Dialog With Actions"
+		          title="Create Section"
 		          modal={false}
 		          open={this.state.open}
 		          onRequestClose={this.handleClose}
 		        >
-		          The actions in this window were passed in as an array of React objects.
+		          	<TextField 
+						underlineFocusStyle={inputStyles.underlineStyle}
+						floatingLabelFocusStyle={inputStyles.floatingLabelFocusStyle} 
+						id="sectionTitle" 
+						floatingLabelText="Enter section title" 
+						onChange={this.onTitleChange}
+				  	/>
+				  	<FlatButton 
+						label="Create"
+						style={borderStyle}
+						rippleColor={buttonStyles.rippleColor} 
+						backgroundColor={buttonStyles.backgroundColor} 
+						labelStyle={buttonStyles.labelStyle}
+						hoverColor={buttonStyles.backgroundColor}
+						onClick={this.handleSubmit}  
+					/>
     			</Dialog>
 			</div>
 		)

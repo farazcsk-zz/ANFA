@@ -100,7 +100,7 @@ class Workout extends Component {
 													<h3>Sections</h3>
 												</Col>
 												<Col md={3}>
-													<SetCreator />
+													<SetCreator workoutId={this.state.workout.id} number={0}/>
 												</Col>
 											</Row>
 											
