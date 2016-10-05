@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import SetCreator from './setCreator';
 import $ from "jquery";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Paper from 'material-ui/Paper';
@@ -54,6 +55,12 @@ class Workout extends Component {
 			width: 'inherit'
 		}
 
+
+		const sectionBorderStyle = {
+			border: '2px solid #36BA93',
+			
+		}
+
 		const redButtonStyles = {
 			backgroundColor: 'transparent',
 			rippleColor: '#D0021B',
@@ -83,6 +90,21 @@ class Workout extends Component {
 											<h3>{this.state.workout.title}</h3>
 											<hr style={hrStyle} />
 											<h6>{this.state.workout.description}</h6>
+											<br />
+											<br />
+											<br />
+											<br />
+											<br />
+											<Row className="show-grid">
+												<Col md={9}>
+													<h3>Sections</h3>
+												</Col>
+												<Col md={3}>
+													<SetCreator />
+												</Col>
+											</Row>
+											
+											<hr style={hrStyle} />
 										</Col>
 										<Col md={3}>
 											<FlatButton 
