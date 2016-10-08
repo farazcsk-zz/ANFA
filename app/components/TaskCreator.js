@@ -3,7 +3,7 @@ import $ from "jquery";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Paper from 'material-ui/Paper';
 import FlatButton from 'material-ui/FlatButton';
-import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
+import {Tabs, Tab} from 'material-ui/Tabs';
 import TextField from 'material-ui/TextField';
 import Divider from 'material-ui/Divider';
 import Grid from 'react-bootstrap/lib/Grid';
@@ -16,16 +16,19 @@ class TaskCreator extends Component {
 	
 	  this.state = {
 	  	task: {
+	  		type: '',
 	  		instructions: '',
 	  		answer: '',
 	  		wrongAnswers: ['', '', '']
-	  	}
+	  	},
+	  	slideIndex: 0
 	  };
 
 	  this.onQuestionChange = this.onQuestionChange.bind(this);
 	  this.onAnswerChange = this.onAnswerChange.bind(this);
 	  this.onWrongChange = this.onWrongChange.bind(this);
 	  this.handleSubmit = this.handleSubmit.bind(this);
+	  this.handleTypeChange = this.handleTypeChange.bind(this);
 
 
 	}
@@ -47,6 +50,12 @@ class TaskCreator extends Component {
 			this.setState({task:{wrongAnswers: [this.state.wrongAnswers[0], this.state.wrongAnswers[1], e.target.value]}});
 		}
 	}
+
+	handleTypeChange(value) {
+    	this.setState({
+      		task: {type: value},
+    	});
+  	};
 	
 	handleSubmit(e) {
 		console.log(this.state)
@@ -65,6 +74,10 @@ class TaskCreator extends Component {
 	}
 
 	render() {
+
+		const titleInputStyle = {
+			fontSize: '2vh',
+		}
 		const paperStyle = {
 		  height: '100%',
 		  width: 'inherit',
@@ -98,13 +111,17 @@ class TaskCreator extends Component {
 		  }
 		};
 
-		const styles = {
-		  block: {
-		    maxWidth: 250,
-		  },
-		  radioButton: {
-		    marginBottom: 16,
-		  },
+		const radioStyles = {
+		    display: 'flex',
+
+		    radioButton: {
+		    	width: 'auto',
+		    	marginRight: '15px'
+		    },
+
+		    iconStyle: {
+		     color: '#36BA93'
+		    } 
 		};
 		return (
 			<div>
@@ -118,20 +135,19 @@ class TaskCreator extends Component {
 		          						floatingLabelText="Enter task name" 
 		          						underlineFocusStyle={inputStyles.underlineStyle}
 										floatingLabelFocusStyle={inputStyles.floatingLabelFocusStyle}
+										underlineShow={false}
 		          						onChange={this.onQuestionChange}
+		          						style={titleInputStyle}
 	          						/>
 	          						<hr />
 	          						<h6>Select task type:</h6>
-	          						<RadioButtonGroup name="taskType" defaultSelected="Learn">
-		          						<RadioButton
-		          							value="Learn"
-	        								label="Learn"
-	  									/>
-	                                    <RadioButton
-	                                    	value="Questions"
-	        								label="Questions"
-	  									/>
-  									</RadioButtonGroup>
+	          						<Tabs
+							          onChange={this.handleTypeChange}
+							          value={this.state.slideIndex}
+							        >
+							          <Tab label="Learn" value={0} />
+							          <Tab label="Questions" value={1} />
+        							</Tabs>
 								</Paper>
 							</MuiThemeProvider>
 							<MuiThemeProvider>
