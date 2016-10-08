@@ -15,8 +15,8 @@ render(
         <IndexRoute component={Home}/>
         <Route path="/worksheets" component={ViewWorksheets}/>
         <Route path="/worksheet/new" component={WorksheetCreator}/>
-        <Route path="/task" component={TaskCreator}/>
         <Route path="/worksheet/:id" component={Worksheet}/>
+        <Route path="/worksheet/:worksheetId/section/:sectionID/task" component={TaskCreator}/>
       </Route>
     </Router>,
     document.getElementById('app')

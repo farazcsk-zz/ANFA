@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import SectionCreator from './sectionCreator';
 import $ from "jquery";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import Paper from 'material-ui/Paper';
 import FlatButton from 'material-ui/FlatButton';
 import Accordion from 'react-bootstrap/lib/Accordion';
@@ -100,9 +101,19 @@ class Worksheet extends Component {
 
 		var sections = this.state.Worksheet.sections.map(function(section) {
 			return (
-				<Panel header={section.title} key={section.id} eventKey={section.id}>
-					 <h1>{section.number}</h1>
-    			</Panel>
+				<Card key={section.id}>
+				    <CardHeader
+				      title={section.title}
+				      subtitle={section.id}
+				      actAsExpander={true}
+				      showExpandableButton={true}
+				    />
+				    <CardActions>
+				    </CardActions>
+				    <CardText expandable={true}>
+				      <h1>{section.number}</h1>
+				    </CardText>
+ 				</Card>
       		); 
 		});
 
@@ -128,9 +139,7 @@ class Worksheet extends Component {
 											</Row>
 											
 											<hr style={hrStyle} />
-											<Accordion>
-												{sections}
-											</Accordion>
+										    {sections}
 											
 										</Col>
 										<Col md={3}>
