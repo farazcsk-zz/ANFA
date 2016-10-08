@@ -8,7 +8,7 @@ import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
-class TestCreator extends Component {
+class TaskCreator extends Component {
 	constructor(props) {
 	  super(props);
 	
@@ -48,7 +48,7 @@ class TestCreator extends Component {
 		console.log(this.state)
 		e.preventDefault();
 		$.ajax({
-	      url: "http://localhost:3000/api/Tests",
+	      url: "http://localhost:3000/api/Tasks",
 	      dataType: 'json',
 	      type: 'POST',
 	      data: this.state,
@@ -101,4 +101,4 @@ class TestCreator extends Component {
 		)
 	}
 }
-export default TestCreator
+export default TaskCreator

@@ -8,21 +8,21 @@ import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
-class ViewWorkouts extends Component {
+class ViewWorksheets extends Component {
 	constructor(props) {
 	  super(props);
 	
 	  this.state = {
-	  	workouts: []
+	  	worksheets: []
 	  };
 	}
 
 	componentDidMount() {
 		$.ajax({
-      		url: "http://localhost:3000/api/Workouts?filter=%7B%22limit%22%3A%20%2210%22%7D&access_token=iTk6s6Boej92VgEFrKNnvg4rqD1uXjZmAUoNtHKgIqOwxi0LpnEToMK8SKYcjXuC",
+      		url: "http://localhost:3000/api/Worksheets?filter=%7B%22limit%22%3A%20%2210%22%7D&access_token=iTk6s6Boej92VgEFrKNnvg4rqD1uXjZmAUoNtHKgIqOwxi0LpnEToMK8SKYcjXuC",
       		dataType: 'json',
       		success: function(data) {
-        		this.setState({workouts: data});
+        		this.setState({worksheets: data});
       		}.bind(this),
       		error: function(xhr, status, err) {
         		console.error('#GET Error', status, err.toString());
@@ -43,14 +43,14 @@ class ViewWorkouts extends Component {
 		  cursor: 'pointer'
 		};
 
-		const workoutTitleStyle = {
+		const worksheetTitleStyle = {
 			textTransform: 'uppercase',
 			float: 'left',
 			marginTop: 70,
 			marginLeft: 15
 		}
 
-		const viewWorkoutsStyle = {
+		const ViewWorksheetsStyle = {
 			marginTop: '5vh'
 		}
 
@@ -77,15 +77,15 @@ class ViewWorkouts extends Component {
 			float: 'right'
 		}
 
-		var viewWorkout = function(id) {   
-      		browserHistory.push('/workout/' + id);
+		var viewWorksheet = function(id) {   
+      		browserHistory.push('/worksheet/' + id);
     	}.bind(this)
 		
-		var workouts = this.state.workouts.map(function(workout) {
+		var worksheets = this.state.worksheets.map(function(worksheet) {
 			return (
-				<Col md={6} key={workout.id}>
+				<Col md={6} key={worksheet.id}>
 					<MuiThemeProvider>
-        				<Paper style={paperStyle} zDepth={1} onClick={() => viewWorkout(workout.id)}>
+        				<Paper style={paperStyle} zDepth={1} onClick={() => viewWorksheet(worksheet.id)}>
         					<div style={{float:'right', marginRight:15}}>
 	        					<div style={controlStyle}>
 	        						<h5>PREVIEW&nbsp;</h5>
@@ -94,7 +94,7 @@ class ViewWorkouts extends Component {
 	        						<h5>DELETE</h5>
 	    						</div>
     						</div>
-        					<h5 style={workoutTitleStyle}>{workout.title}</h5>
+        					<h5 style={worksheetTitleStyle}>{worksheet.title}</h5>
     					</Paper>
     				</MuiThemeProvider> 
     			</Col>
@@ -102,10 +102,10 @@ class ViewWorkouts extends Component {
 		});
 
 		return (
-			<div style={viewWorkoutsStyle}>
+			<div style={ViewWorksheetsStyle}>
 				<Grid>
-					<h1 style={{display: 'inline-block'}}>Workouts</h1>
-					<Link to={{pathname:"/create/workout"}}>
+					<h1 style={{display: 'inline-block'}}>WORKSHEETS</h1>
+					<Link to={{pathname:"/worksheet/new"}}>
 						<MuiThemeProvider>
 							<FlatButton 
 								style={borderStyle}
@@ -113,18 +113,18 @@ class ViewWorkouts extends Component {
 								backgroundColor={buttonStyles.backgroundColor} 
 								labelStyle={buttonStyles.labelStyle}
 								hoverColor={buttonStyles.backgroundColor} 
-								label="CREATE NEW WORKOUT" 
+								label="CREATE NEW WORKSHEET" 
 								onClick={this.handleSubmit} 
 							/>
 						</MuiThemeProvider>
 					</Link>
 					<hr style={hrStyle}/>
 					<Row className="show-grid">
-						{workouts}
+						{worksheets}
 					</Row>
 				</Grid>
 			</div>
 		);
 	}
 }
-export default ViewWorkouts
+export default ViewWorksheets

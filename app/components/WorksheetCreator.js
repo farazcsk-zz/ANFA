@@ -10,7 +10,7 @@ import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
-class WorkoutCreator extends Component {
+class WorksheetCreator extends Component {
 	constructor(props) {
 	  super(props);
 	
@@ -36,12 +36,12 @@ class WorkoutCreator extends Component {
 	handleSubmit(e) {
 		e.preventDefault();
 		$.ajax({
-	      url: "http://localhost:3000/api/Workouts",
+	      url: "http://localhost:3000/api/Worksheets",
 	      dataType: 'json',
 	      type: 'POST',
 	      data: this.state,
 	      success: function(data) {
-	      	browserHistory.push('/workout/' + data.id);
+	      	browserHistory.push('/worksheet/' + data.id);
 
 	      }.bind(this),
 	      error: function(xhr, status, err) {
@@ -52,7 +52,7 @@ class WorkoutCreator extends Component {
 
 	handleCancel(e) {
 		e.preventDefault();
-		browserHistory.push('/view/workouts');
+		browserHistory.push('/worksheets');
 	}
 
 	render() {
@@ -139,7 +139,7 @@ class WorkoutCreator extends Component {
 				          						style={titleInputStyle}
 				          						underlineFocusStyle={inputStyles.underlineStyle}
 												floatingLabelFocusStyle={inputStyles.floatingLabelFocusStyle} 
-				          						placeholder="Enter Workout Title" 
+				          						placeholder="Enter Worksheet Title" 
 				          						underlineShow={false}
 				          						onChange={this.onTitleChange}
 			          						/>
@@ -149,7 +149,7 @@ class WorkoutCreator extends Component {
 				          						style={descInputStyle}
 				          						underlineFocusStyle={inputStyles.underlineStyle}
 												floatingLabelFocusStyle={inputStyles.floatingLabelFocusStyle} 
-				          						placeholder="Enter Workout Description"
+				          						placeholder="Enter Worksheet Description"
 				          						underlineShow={false} 
 				          						onChange={this.onDescriptionChange}
 			          						/>
@@ -184,4 +184,4 @@ class WorkoutCreator extends Component {
 		)
 	}
 }
-export default WorkoutCreator
+export default WorksheetCreator

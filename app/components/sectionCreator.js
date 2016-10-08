@@ -9,13 +9,13 @@ import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
-class SetCreator extends Component {
+class SectionCreator extends Component {
 	constructor(props) {
 	  super(props);
 	
 	  this.state = {
 	  	open: false,
-	  	set: {
+	  	section: {
 	  		title: ''
 	  	}
 	  };
@@ -29,12 +29,12 @@ class SetCreator extends Component {
 	handleSubmit(e) {
 		e.preventDefault();
 		$.ajax({
-	      url: "http://localhost:3000/api/Sets?access_token=TbZ4UnDIN1jbRJ1xzVf5mTbEGkjR2kXZjEEeYVqiwHIwgytpFsjYCklHdIrzxBCW",
+	      url: "http://localhost:3000/api/Sections?access_token=TbZ4UnDIN1jbRJ1xzVf5mTbEGkjR2kXZjEEeYVqiwHIwgytpFsjYCklHdIrzxBCW",
 	      dataType: 'json',
 	      type: 'POST',
-	      data: this.state.set,
+	      data: this.state.section,
 	      success: function(data) {
-	      	this.props.setAdded()
+	      	this.props.sectionAdded()
 	      	this.handleClose()
 	      }.bind(this),
 	      error: function(xhr, status, err) {
@@ -51,7 +51,7 @@ class SetCreator extends Component {
  	};
 
  	onTitleChange(e) {
-		this.setState({set: {title: e.target.value, number: this.props.number, workoutId: this.props.workoutId}});
+		this.setState({section: {title: e.target.value, number: this.props.number, worksheetId: this.props.worksheetId}});
 	}
 
 	render() {
@@ -115,4 +115,4 @@ class SetCreator extends Component {
 		)
 	}
 }
-export default SetCreator
+export default SectionCreator
