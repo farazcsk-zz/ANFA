@@ -1,6 +1,6 @@
 import React, {Component} from "react";
-import {Editor, EditorState, RichUtils} from 'draft-js';
 import $ from "jquery";
+import RichTextEditor from './RichTextEditor';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Paper from 'material-ui/Paper';
 import FlatButton from 'material-ui/FlatButton';
@@ -21,29 +21,16 @@ class TaskCreator extends Component {
 	  		instructions: '',
 	  		answer: '',
 	  		wrongAnswers: ['', '', '']
-	  	},
-	  	editorState: EditorState.createEmpty()
+	  	}
 
 	  };
-	  this.onChange = (editorState) => this.setState({editorState});
 	  this.onInstructionsChange = this.onInstructionsChange.bind(this);
 	  this.onAnswerChange = this.onAnswerChange.bind(this);
 	  this.onWrongChange = this.onWrongChange.bind(this);
 	  this.handleSubmit = this.handleSubmit.bind(this);
 	  this.handleTypeChange = this.handleTypeChange.bind(this);
-	  this.handleKeyCommand = this.handleKeyCommand.bind(this);
-
 
 	}
-
-	handleKeyCommand(command) {
-	    const newState = RichUtils.handleKeyCommand(this.state.editorState, command);
-	    if (newState) {
-	      this.onChange(newState);
-	      return 'handled';
-	    }
-	    return 'not-handled';
-  	}
 
 	onInstructionsChange(e) {
 		this.setState({task: { instructions: e.target.value}});
@@ -87,14 +74,13 @@ class TaskCreator extends Component {
 	}
 
 	render() {
-		const {editorState} = this.state.editorState;
 		const tabStyles = {
 			inkBarStyle: {
 				backgroundColor: '#FFFFFF'
 			}
 		}
 		const titleInputStyle = {
-			fontSize: '2vh',
+			fontSize: '3vh',
 		}
 		const paperStyle = {
 		  height: '100%',
@@ -164,19 +150,8 @@ class TaskCreator extends Component {
         							</Tabs>
 								</Paper>
 							</MuiThemeProvider>
-							<MuiThemeProvider>
-								<Paper style={paperStyle}>
-									<Row className="show-grid">
-										<Col md={12}>
-				          					<Editor 
-				          						editorState={this.state.editorState}
-				          						handleKeyCommand={this.handleKeyCommand} 
-				          						onChange={this.onChange} 
-			          						/>
-				          				</Col>
-				          			</Row>
-				        		</Paper>
-			        		</MuiThemeProvider>
+							
+							<RichTextEditor />
 
 			        		<MuiThemeProvider>
 			        			<Paper style={paperStyle}>
