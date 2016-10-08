@@ -101,7 +101,7 @@ class Worksheet extends Component {
 		var sections = this.state.Worksheet.sections.map(function(section) {
 			return (
 				<Panel header={section.title} key={section.id} eventKey={section.id}>
-					 <h1>{section.title}</h1>
+					 <h1>{section.number}</h1>
     			</Panel>
       		); 
 		});
@@ -123,7 +123,7 @@ class Worksheet extends Component {
 													<h3>Sections</h3>
 												</Col>
 												<Col md={3}>
-													<SectionCreator worksheetId={this.state.Worksheet.id} number={0} sectionAdded={this.sectionAdded}/>
+													<SectionCreator worksheetId={this.state.Worksheet.id} number={this.state.Worksheet.sections.length + 1} sectionAdded={this.sectionAdded}/>
 												</Col>
 											</Row>
 											
