@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import {Editor, EditorState, RichUtils} from 'draft-js';
 import $ from "jquery";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Paper from 'material-ui/Paper';
@@ -16,25 +17,36 @@ class TaskCreator extends Component {
 	
 	  this.state = {
 	  	task: {
-	  		type: '',
+	  		type: 'Learn',
 	  		instructions: '',
 	  		answer: '',
 	  		wrongAnswers: ['', '', '']
 	  	},
-	  	slideIndex: 0
-	  };
+	  	editorState: EditorState.createEmpty()
 
-	  this.onQuestionChange = this.onQuestionChange.bind(this);
+	  };
+	  this.onChange = (editorState) => this.setState({editorState});
+	  this.onInstructionsChange = this.onInstructionsChange.bind(this);
 	  this.onAnswerChange = this.onAnswerChange.bind(this);
 	  this.onWrongChange = this.onWrongChange.bind(this);
 	  this.handleSubmit = this.handleSubmit.bind(this);
 	  this.handleTypeChange = this.handleTypeChange.bind(this);
+	  this.handleKeyCommand = this.handleKeyCommand.bind(this);
 
 
 	}
 
-	onQuestionChange(e) {
-		this.setState({task: { question: e.target.value}});
+	handleKeyCommand(command) {
+	    const newState = RichUtils.handleKeyCommand(this.state.editorState, command);
+	    if (newState) {
+	      this.onChange(newState);
+	      return 'handled';
+	    }
+	    return 'not-handled';
+  	}
+
+	onInstructionsChange(e) {
+		this.setState({task: { instructions: e.target.value}});
 	}
 
 	onAnswerChange(e) {
@@ -43,11 +55,11 @@ class TaskCreator extends Component {
 
 	onWrongChange(e) {
 		if (e.target.id === 'wrongAnswer1') {
-			this.setState({task:{wrongAnswers: [e.target.value, this.state.wrongAnswers[1], this.state.wrongAnswers[2]]}});
+			this.setState({task:{wrongAnswers: [e.target.value, this.state.task.wrongAnswers[1], this.state.task.wrongAnswers[2]]}});
 		} else if (e.target.id === 'wrongAnswer2') {
-			this.setState({task:{wrongAnswers: [this.state.wrongAnswers[0], e.target.value, this.state.wrongAnswers[2]]}});
+			this.setState({task:{wrongAnswers: [this.state.task.wrongAnswers[0], e.target.value, this.state.task.wrongAnswers[2]]}});
 		} else {
-			this.setState({task:{wrongAnswers: [this.state.wrongAnswers[0], this.state.wrongAnswers[1], e.target.value]}});
+			this.setState({task:{wrongAnswers: [this.state.task.wrongAnswers[0], this.state.task.wrongAnswers[1], e.target.value]}});
 		}
 	}
 
@@ -55,6 +67,7 @@ class TaskCreator extends Component {
     	this.setState({
       		task: {type: value},
     	});
+    	console.log(this.state.task)
   	};
 	
 	handleSubmit(e) {
@@ -74,7 +87,12 @@ class TaskCreator extends Component {
 	}
 
 	render() {
-
+		const {editorState} = this.state.editorState;
+		const tabStyles = {
+			inkBarStyle: {
+				backgroundColor: '#FFFFFF'
+			}
+		}
 		const titleInputStyle = {
 			fontSize: '2vh',
 		}
@@ -111,18 +129,6 @@ class TaskCreator extends Component {
 		  }
 		};
 
-		const radioStyles = {
-		    display: 'flex',
-
-		    radioButton: {
-		    	width: 'auto',
-		    	marginRight: '15px'
-		    },
-
-		    iconStyle: {
-		     color: '#36BA93'
-		    } 
-		};
 		return (
 			<div>
 				<Grid>
@@ -136,17 +142,25 @@ class TaskCreator extends Component {
 		          						underlineFocusStyle={inputStyles.underlineStyle}
 										floatingLabelFocusStyle={inputStyles.floatingLabelFocusStyle}
 										underlineShow={false}
-		          						onChange={this.onQuestionChange}
 		          						style={titleInputStyle}
 	          						/>
 	          						<hr />
-	          						<h6>Select task type:</h6>
+	          						<h4 style={{color: '#BBB9BF'}}>Select task type:</h4>
 	          						<Tabs
 							          onChange={this.handleTypeChange}
-							          value={this.state.slideIndex}
+							          value={this.state.task.type}
+							          inkBarStyle={tabStyles.inkBarStyle}
 							        >
-							          <Tab label="Learn" value={0} />
-							          <Tab label="Questions" value={1} />
+							        	<Tab 
+							          		label="Learn" 
+							          		value="Learn"
+							          		style={{backgroundColor: '#36BA93'}} 
+						          	  	/>
+							        	<Tab 
+							          		label="Questions" 
+							          		value="Questions"
+							          		style={{backgroundColor: '#36BA93'}} 
+						          		/>
         							</Tabs>
 								</Paper>
 							</MuiThemeProvider>
@@ -154,13 +168,10 @@ class TaskCreator extends Component {
 								<Paper style={paperStyle}>
 									<Row className="show-grid">
 										<Col md={12}>
-				          					<TextField 
-				          						id="question" 
-				          						floatingLabelText="Instructions" 
-				          						multiLine={true}
-				          						underlineFocusStyle={inputStyles.underlineStyle}
-												floatingLabelFocusStyle={inputStyles.floatingLabelFocusStyle}
-				          						onChange={this.onQuestionChange}
+				          					<Editor 
+				          						editorState={this.state.editorState}
+				          						handleKeyCommand={this.handleKeyCommand} 
+				          						onChange={this.onChange} 
 			          						/>
 				          				</Col>
 				          			</Row>
