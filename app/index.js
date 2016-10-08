@@ -2,10 +2,10 @@ import React from "react";
 import {render} from "react-dom";
 import {Router, Route, IndexRoute, browserHistory} from "react-router";
 import App from "./components/App";
-import ViewWorkouts from "./components/ViewWorkouts";
-import WorkoutCreator from "./components/WorkoutCreator";
-import Workout from "./components/Workout";
-import TestCreator from "./components/TestCreator";
+import ViewWorksheets from "./components/ViewWorksheets";
+import WorksheetCreator from "./components/WorksheetCreator";
+import Worksheet from "./components/Worksheet";
+import TaskCreator from "./components/TaskCreator";
 import Home from "./components/Home";
 
 
@@ -13,10 +13,10 @@ render(
     <Router onUpdate={() => window.scrollTo(0, 0)} history={browserHistory}>
       <Route path="/" component={App}>
         <IndexRoute component={Home}/>
-        <Route path="/view/workouts" component={ViewWorkouts}/>
-        <Route path="/create/workout" component={WorkoutCreator}/>
-        <Route path="/test" component={TestCreator}/>
-        <Route path="/workout/:id" component={Workout}/>
+        <Route path="/worksheets" component={ViewWorksheets}/>
+        <Route path="/worksheet/new" component={WorksheetCreator}/>
+        <Route path="/task" component={TaskCreator}/>
+        <Route path="/worksheet/:id" component={Worksheet}/>
       </Route>
     </Router>,
     document.getElementById('app')

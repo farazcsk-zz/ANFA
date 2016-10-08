@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import SetCreator from './setCreator';
+import SectionCreator from './sectionCreator';
 import $ from "jquery";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Paper from 'material-ui/Paper';
@@ -8,26 +8,25 @@ import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
-class Workout extends Component {
+class Worksheet extends Component {
 	constructor(props) {
 	  super(props);
 	
 	  this.state = {
-	  	workout: {
-	  		sets: []
+	  	Worksheet: {
+	  		sections: []
 	  	}
 	  };
 
-	  this.setAdded = this.setAdded.bind(this);
+	  this.sectionAdded = this.sectionAdded.bind(this);
 	}
 
 	componentDidMount() {
 		$.ajax({
-      		url: "http://localhost:3000/api/Workouts/" + this.props.params.id +"?filter=%7B%22include%22%3A%7B%22relation%22%3A%22sets%22%7D%7D&access_token=TbZ4UnDIN1jbRJ1xzVf5mTbEGkjR2kXZjEEeYVqiwHIwgytpFsjYCklHdIrzxBCW",
+      		url: "http://localhost:3000/api/Worksheets/" + this.props.params.id +"?filter=%7B%22include%22%3A%7B%22relation%22%3A%22sections%22%7D%7D&access_token=TbZ4UnDIN1jbRJ1xzVf5mTbEGkjR2kXZjEEeYVqiwHIwgytpFsjYCklHdIrzxBCW",
       		dataType: 'json',
       		success: function(data) {
-        		this.setState({workout: data});
-        		console.log(this.state.workout.sets);
+        		this.setState({Worksheet: data});
       		}.bind(this),
       		error: function(xhr, status, err) {
         		console.error('#GET Error', status, err.toString());
@@ -35,14 +34,12 @@ class Workout extends Component {
     	});
 	}
 
-	setAdded() {
-		console.log('kafjshgdlksjfgh')
+	sectionAdded() {
 		$.ajax({
-      		url: "http://localhost:3000/api/Workouts/" + this.props.params.id +"?filter=%7B%22include%22%3A%7B%22relation%22%3A%22sets%22%7D%7D&access_token=TbZ4UnDIN1jbRJ1xzVf5mTbEGkjR2kXZjEEeYVqiwHIwgytpFsjYCklHdIrzxBCW",
+      		url: "http://localhost:3000/api/Worksheets/" + this.props.params.id +"?filter=%7B%22include%22%3A%7B%22relation%22%3A%22sections%22%7D%7D&access_token=TbZ4UnDIN1jbRJ1xzVf5mTbEGkjR2kXZjEEeYVqiwHIwgytpFsjYCklHdIrzxBCW",
       		dataType: 'json',
       		success: function(data) {
-        		this.setState({workout: data});
-        		console.log('set added');
+        		this.setState({Worksheet: data});
       		}.bind(this),
       		error: function(xhr, status, err) {
         		console.error('#GET Error', status, err.toString());
@@ -99,10 +96,10 @@ class Workout extends Component {
 			border: '2px solid #36333C'
 		}
 
-		var sets = this.state.workout.sets.map(function(set) {
+		var sections = this.state.Worksheet.sections.map(function(section) {
 			return (
-				<div key={set.id}>
-					 <h1>{set.title}</h1>
+				<div key={section.id}>
+					 <h1>{section.title}</h1>
     			</div>
       		); 
 		});
@@ -116,20 +113,20 @@ class Workout extends Component {
 								<Paper style={paperStyle}>
 									<Row className="show-grid">
 										<Col md={9}>
-											<h3>{this.state.workout.title}</h3>
+											<h3>{this.state.Worksheet.title}</h3>
 											<hr style={hrStyle} />
-											<h6 style={{marginBottom: '10vh'}}>{this.state.workout.description}</h6>
+											<h6 style={{marginBottom: '10vh'}}>{this.state.Worksheet.description}</h6>
 											<Row className="show-grid">
 												<Col md={9}>
-													<h3>Sets</h3>
+													<h3>Sections</h3>
 												</Col>
 												<Col md={3}>
-													<SetCreator workoutId={this.state.workout.id} number={0} setAdded={this.setAdded}/>
+													<SectionCreator worksheetId={this.state.Worksheet.id} number={0} sectionAdded={this.sectionAdded}/>
 												</Col>
 											</Row>
 											
 											<hr style={hrStyle} />
-											{sets}
+											{sections}
 										</Col>
 										<Col md={3}>
 											<FlatButton 
@@ -159,4 +156,4 @@ class Workout extends Component {
 		)
 	}
 }
-export default Workout
+export default Worksheet

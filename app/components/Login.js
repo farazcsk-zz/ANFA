@@ -32,7 +32,7 @@ class Login extends Component {
 	      data: this.state,
 	      success: function(data) {
 	      	console.log(data);
-	        browserHistory.push('/view/workouts');
+	        browserHistory.push('/worksheets');
 	      }.bind(this),
 	      error: function(xhr, status, err) {
 	        console.error(this.props.url, status, err.toString());
