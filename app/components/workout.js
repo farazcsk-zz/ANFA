@@ -36,7 +36,6 @@ class Workout extends Component {
 	}
 
 	setAdded() {
-		console.log('kafjshgdlksjfgh')
 		$.ajax({
       		url: "http://localhost:3000/api/Workouts/" + this.props.params.id +"?filter=%7B%22include%22%3A%7B%22relation%22%3A%22sets%22%7D%7D&access_token=TbZ4UnDIN1jbRJ1xzVf5mTbEGkjR2kXZjEEeYVqiwHIwgytpFsjYCklHdIrzxBCW",
       		dataType: 'json',
