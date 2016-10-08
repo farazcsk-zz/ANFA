@@ -4,6 +4,8 @@ import $ from "jquery";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Paper from 'material-ui/Paper';
 import FlatButton from 'material-ui/FlatButton';
+import Accordion from 'react-bootstrap/lib/Accordion';
+import Panel from 'react-bootstrap/lib/Panel';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
@@ -98,9 +100,9 @@ class Worksheet extends Component {
 
 		var sections = this.state.Worksheet.sections.map(function(section) {
 			return (
-				<div key={section.id}>
+				<Panel header={section.title} key={section.id} eventKey={section.id}>
 					 <h1>{section.title}</h1>
-    			</div>
+    			</Panel>
       		); 
 		});
 
@@ -126,7 +128,10 @@ class Worksheet extends Component {
 											</Row>
 											
 											<hr style={hrStyle} />
-											{sections}
+											<Accordion>
+												{sections}
+											</Accordion>
+											
 										</Col>
 										<Col md={3}>
 											<FlatButton 
