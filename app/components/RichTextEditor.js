@@ -2,6 +2,10 @@ import React, {Component} from "react";
 import {Editor, EditorState, RichUtils} from 'draft-js';
 import Paper from 'material-ui/Paper';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import FormatBold from 'material-ui/svg-icons/editor/format-bold';
+import FormatItalic from 'material-ui/svg-icons/editor/format-italic';
+import FormatUnderlined from 'material-ui/svg-icons/editor/format-underlined';
+import IconButton from 'material-ui/IconButton';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
@@ -17,6 +21,7 @@ class RichTextEditor extends Component {
 	  };
 	  this.onChange = (editorState) => this.setState({editorState});
 	  this.handleKeyCommand = this.handleKeyCommand.bind(this);
+
 	}
 
 	handleKeyCommand(command) {
@@ -26,6 +31,10 @@ class RichTextEditor extends Component {
 	      return 'handled';
 	    }
 	    return 'not-handled';
+  	}
+
+  	_onBoldClick() {
+  		this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, 'BOLD'));
   	}
 
 	render() {
@@ -42,6 +51,29 @@ class RichTextEditor extends Component {
 				<Paper style={paperStyle}>
 					<Row className="show-grid">
 						<Col md={12}>
+							<div>
+								<IconButton
+									onClick={this._onBoldClick.bind(this)}
+									tooltip="BOLD"
+									tooltipPosition="top-center"
+								>
+									<FormatBold style={{cursor: 'pointer'}}/>
+								</IconButton>
+								<IconButton
+									onClick={this._onBoldClick.bind(this)}
+									tooltip="ITALIC"
+									tooltipPosition="top-center"
+								>
+									<FormatItalic style={{cursor: 'pointer'}}/>
+								</IconButton>
+								<IconButton
+									onClick={this._onBoldClick.bind(this)}
+									tooltip="UNDERLINE"
+									tooltipPosition="top-center"
+								>
+									<FormatUnderlined style={{cursor: 'pointer'}}/>
+								</IconButton>
+							</div>
           					<Editor 
           						editorState={this.state.editorState}
           						handleKeyCommand={this.handleKeyCommand} 
