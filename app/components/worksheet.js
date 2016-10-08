@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import SectionCreator from './sectionCreator';
 import $ from "jquery";
+import {DefaultRoute, RouteHandler, Link, browserHistory} from "react-router";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import Paper from 'material-ui/Paper';
@@ -52,7 +53,7 @@ class Worksheet extends Component {
 	render() {
 
 		const paperStyle = {
-		  height: '100vh',
+		  height: '100%',
 		  width: 'inherit',
 		  margin: 20,
 		  padding: 10,
@@ -99,7 +100,7 @@ class Worksheet extends Component {
 			border: '2px solid #36333C'
 		}
 
-		var sections = this.state.Worksheet.sections.map(function(section) {
+		var sections = this.state.Worksheet.sections.map((section) => {
 			return (
 				<Card key={section.id}>
 				    <CardHeader
@@ -111,7 +112,20 @@ class Worksheet extends Component {
 				    <CardActions>
 				    </CardActions>
 				    <CardText expandable={true}>
-				      <h1>{section.number}</h1>
+				      <Row className="show-grid">
+				      	<Col md={6} mdOffset={4}>
+				      		<Link to={{pathname:"/worksheet/" + this.state.Worksheet.id + "/section/" + section.id + "/task/new" }}>
+					      		<FlatButton 
+									label="Add task"
+									style={borderStyle}
+									rippleColor={buttonStyles.rippleColor} 
+									backgroundColor={buttonStyles.backgroundColor} 
+									labelStyle={buttonStyles.labelStyle}
+									hoverColor={buttonStyles.backgroundColor}  
+								/>
+							</Link>
+				      	</Col>
+				      </Row>
 				    </CardText>
  				</Card>
       		); 
