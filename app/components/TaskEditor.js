@@ -10,6 +10,8 @@ import Divider from 'material-ui/Divider';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
+import TastyNotification from './TastyNotification';
+import CircularProgress from 'material-ui/CircularProgress';
 
 class TaskEditor extends Component {
 	constructor(props) {
@@ -26,6 +28,8 @@ class TaskEditor extends Component {
 	  	}
 
 	  };
+
+	  
 	  this.onNameChange = this.onNameChange.bind(this);
 	  this.onAnswerChange = this.onAnswerChange.bind(this);
 	  this.onWrongChange = this.onWrongChange.bind(this);
@@ -154,7 +158,7 @@ class TaskEditor extends Component {
 		      }.bind(this)
     		});
 		} else {
-			alert('Instructions cannot be left blank');
+			this.setState({error:true});
 		}
 		
 	}
@@ -313,8 +317,14 @@ class TaskEditor extends Component {
 									label="Save" 
 									onClick={this.handleSubmit} 
 								/>
+
+							</MuiThemeProvider>
+							<br />
+							<MuiThemeProvider>
+								<CircularProgress />
 							</MuiThemeProvider>
 	        			</Col>
+	        			<TastyNotification  open={this.state.error} message="Instructions cannot be left blank."/>
 					</Row>
 	    		</Grid>
 			</div>

@@ -9,6 +9,7 @@ import Divider from 'material-ui/Divider';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
+import TastyNotification from './TastyNotification';
 
 class WorksheetCreator extends Component {
 	constructor(props) {
@@ -50,7 +51,7 @@ class WorksheetCreator extends Component {
 		      }.bind(this)
 	    	});
 		} else {
-			alert('Title cannot be left blank');
+			this.setState({error:true});
 		}
 	}
 
@@ -181,6 +182,7 @@ class WorksheetCreator extends Component {
 									</Row>
 					    		</Paper>
 				    		</MuiThemeProvider>
+				    		<TastyNotification  open={this.state.error} message="Title cannot be left blank."/>
 			    		</Col>
 		    		</Row>
 	    		</Grid>

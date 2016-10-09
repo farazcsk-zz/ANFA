@@ -41,7 +41,13 @@ class Login extends Component {
 	        browserHistory.push('/worksheets');
 	      }.bind(this),
 	      error: function(xhr, status, err) {
-	      	this.setState({error: true})
+	      	this.setState({
+	      		details: {
+					username: this.state.details.username,
+					password: this.state.details.password
+				},
+	      		error: true
+	      	})
 	        console.error(this.props.url, status, err.toString());
 	      }.bind(this)
     	});
@@ -52,7 +58,8 @@ class Login extends Component {
 			details: {
 				username: e.target.value,
 				password: this.state.details.password
-			}
+			},
+			error: false
 		});
 	}
 
@@ -61,7 +68,8 @@ class Login extends Component {
 			details: {
 				username: this.state.details.username,
 				password: e.target.value
-			}
+			},
+			error: false
 		});
 	}
 

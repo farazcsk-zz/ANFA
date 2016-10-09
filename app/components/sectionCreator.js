@@ -8,6 +8,8 @@ import Divider from 'material-ui/Divider';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
+import TastyNotification from './TastyNotification';
+import CircularProgress from 'material-ui/CircularProgress';
 
 class SectionCreator extends Component {
 	constructor(props) {
@@ -44,7 +46,7 @@ class SectionCreator extends Component {
 		      }.bind(this)
 	    	});
 		} else {
-			alert('Title cannot be left blank');
+			this.setState({error: true})
 		}
 		
 	}
@@ -116,7 +118,9 @@ class SectionCreator extends Component {
 						hoverColor={buttonStyles.backgroundColor}
 						onClick={this.handleSubmit}  
 					/>
+					<CircularProgress />
     			</Dialog>
+    			<TastyNotification  open={this.state.error} message="Title cannot be left blank."/>
 			</div>
 		)
 	}
