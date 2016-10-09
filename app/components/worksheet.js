@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import SectionCreator from './sectionCreator';
+import TaskInSection from './TaskInSection';
 import $ from "jquery";
 import {DefaultRoute, RouteHandler, Link, browserHistory} from "react-router";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -104,7 +105,7 @@ class Worksheet extends Component {
 
 			var tasks = section.tasks.map((task) =>{
 				return (
-					<p>{task.name}</p>
+					<TaskInSection key={task.id} name={task.name} />
 				);
 			});
 
@@ -119,9 +120,10 @@ class Worksheet extends Component {
 				    <CardActions>
 				    </CardActions>
 				    <CardText expandable={true}>
+				      {tasks}
 				      <Row className="show-grid">
 				      	<Col md={6} mdOffset={4}>
-				      		{tasks}
+				      		
 				      		<Link to={{pathname:"/worksheet/" + this.state.Worksheet.id + "/section/" + section.id + "/task/new" }}>
 					      		<FlatButton 
 									label="Add task"
