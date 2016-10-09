@@ -23,6 +23,7 @@ class App extends Component {
 	render() {
 		const style = {
 			backgroundColor: '#F3F3F3',
+			minHeight: '100vh',
 
 			title: {
 				cursor: 'pointer',

@@ -34,20 +34,24 @@ class WorksheetCreator extends Component {
 	}
 
 	handleSubmit(e) {
-		e.preventDefault();
-		$.ajax({
-	      url: "http://localhost:3000/api/Worksheets",
-	      dataType: 'json',
-	      type: 'POST',
-	      data: this.state,
-	      success: function(data) {
-	      	browserHistory.push('/worksheet/' + data.id);
+		if(this.state.title.length > 0){
+			e.preventDefault();
+			$.ajax({
+		      url: "http://localhost:3000/api/Worksheets",
+		      dataType: 'json',
+		      type: 'POST',
+		      data: this.state,
+		      success: function(data) {
+		      	browserHistory.push('/worksheet/' + data.id);
 
-	      }.bind(this),
-	      error: function(xhr, status, err) {
-	        console.error(this.props.url, status, err.toString());
-	      }.bind(this)
-    	});
+		      }.bind(this),
+		      error: function(xhr, status, err) {
+		        console.error(this.props.url, status, err.toString());
+		      }.bind(this)
+	    	});
+		} else {
+			alert('Title cannot be left blank');
+		}
 	}
 
 	handleCancel(e) {

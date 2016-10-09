@@ -125,19 +125,25 @@ class TaskCreator extends Component {
   	};
 	
 	handleSubmit(e) {
-		console.log(this.state.task)
-		e.preventDefault();
-		$.ajax({
-	      url: "http://localhost:3000/api/Tasks",
-	      dataType: 'json',
-	      type: 'POST',
-	      data: this.state.task,
-	      success: function(data) {
-	      }.bind(this),
-	      error: function(xhr, status, err) {
-	        console.error(this.props.url, status, err.toString());
-	      }.bind(this)
-    	});
+
+		if(this.state.task.instructions.length > 0) {
+			console.log(this.state.task)
+			e.preventDefault();
+			$.ajax({
+		      url: "http://localhost:3000/api/Tasks",
+		      dataType: 'json',
+		      type: 'POST',
+		      data: this.state.task,
+		      success: function(data) {
+		      }.bind(this),
+		      error: function(xhr, status, err) {
+		        console.error(this.props.url, status, err.toString());
+		      }.bind(this)
+    		});
+		} else {
+			alert('Instructions cannot be left blank');
+		}
+		
 	}
 
 	render() {
