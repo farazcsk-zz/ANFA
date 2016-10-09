@@ -1,9 +1,13 @@
 import React, {Component} from "react";
 import SectionCreator from './sectionCreator';
 import $ from "jquery";
+import {DefaultRoute, RouteHandler, Link, browserHistory} from "react-router";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import Paper from 'material-ui/Paper';
 import FlatButton from 'material-ui/FlatButton';
+import Accordion from 'react-bootstrap/lib/Accordion';
+import Panel from 'react-bootstrap/lib/Panel';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
@@ -49,7 +53,7 @@ class Worksheet extends Component {
 	render() {
 
 		const paperStyle = {
-		  height: '100vh',
+		  height: '100%',
 		  width: 'inherit',
 		  margin: 20,
 		  padding: 10,
@@ -96,11 +100,34 @@ class Worksheet extends Component {
 			border: '2px solid #36333C'
 		}
 
-		var sections = this.state.Worksheet.sections.map(function(section) {
+		var sections = this.state.Worksheet.sections.map((section) => {
 			return (
-				<div key={section.id}>
-					 <h1>{section.title}</h1>
-    			</div>
+				<Card key={section.id}>
+				    <CardHeader
+				      title={section.title}
+				      subtitle={section.id}
+				      actAsExpander={true}
+				      showExpandableButton={true}
+				    />
+				    <CardActions>
+				    </CardActions>
+				    <CardText expandable={true}>
+				      <Row className="show-grid">
+				      	<Col md={6} mdOffset={4}>
+				      		<Link to={{pathname:"/worksheet/" + this.state.Worksheet.id + "/section/" + section.id + "/task/new" }}>
+					      		<FlatButton 
+									label="Add task"
+									style={borderStyle}
+									rippleColor={buttonStyles.rippleColor} 
+									backgroundColor={buttonStyles.backgroundColor} 
+									labelStyle={buttonStyles.labelStyle}
+									hoverColor={buttonStyles.backgroundColor}  
+								/>
+							</Link>
+				      	</Col>
+				      </Row>
+				    </CardText>
+ 				</Card>
       		); 
 		});
 
@@ -121,12 +148,13 @@ class Worksheet extends Component {
 													<h3>Sections</h3>
 												</Col>
 												<Col md={3}>
-													<SectionCreator worksheetId={this.state.Worksheet.id} number={0} sectionAdded={this.sectionAdded}/>
+													<SectionCreator worksheetId={this.state.Worksheet.id} number={this.state.Worksheet.sections.length + 1} sectionAdded={this.sectionAdded}/>
 												</Col>
 											</Row>
 											
 											<hr style={hrStyle} />
-											{sections}
+										    {sections}
+											
 										</Col>
 										<Col md={3}>
 											<FlatButton 
