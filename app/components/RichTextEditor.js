@@ -34,7 +34,16 @@ class RichTextEditor extends Component {
   	}
 
   	_onBoldClick() {
-  		this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, 'BOLD'));
+  		console.log(EditorState.getCurrentContent());
+    	this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, 'BOLD'));
+  	}
+
+  	_onItalicClick() {
+    	this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, 'ITALIC'));
+  	}
+
+  	_onUnderlineClick() {
+    	this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, 'UNDERLINE'));
   	}
 
 	render() {
@@ -60,14 +69,14 @@ class RichTextEditor extends Component {
 									<FormatBold style={{cursor: 'pointer'}}/>
 								</IconButton>
 								<IconButton
-									onClick={this._onBoldClick.bind(this)}
+									onClick={this._onItalicClick.bind(this)}
 									tooltip="ITALIC"
 									tooltipPosition="top-center"
 								>
 									<FormatItalic style={{cursor: 'pointer'}}/>
 								</IconButton>
 								<IconButton
-									onClick={this._onBoldClick.bind(this)}
+									onClick={this._onUnderlineClick.bind(this)}
 									tooltip="UNDERLINE"
 									tooltipPosition="top-center"
 								>
