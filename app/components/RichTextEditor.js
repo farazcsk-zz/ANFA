@@ -1,5 +1,6 @@
 import React, {Component} from "react";
-import {Editor, EditorState, RichUtils} from 'draft-js';
+import {Editor, EditorState, RichUtils, convertToRaw} from 'draft-js';
+import {stateToHTML} from 'draft-js-export-html';
 import Paper from 'material-ui/Paper';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import FormatBold from 'material-ui/svg-icons/editor/format-bold';
@@ -34,7 +35,7 @@ class RichTextEditor extends Component {
   	}
 
   	_onBoldClick() {
-  		console.log(EditorState.getCurrentContent());
+  		console.log(stateToHTML(this.state.editorState.getCurrentContent()));
     	this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, 'BOLD'));
   	}
 
