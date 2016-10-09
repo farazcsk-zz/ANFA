@@ -35,7 +35,7 @@ class RichTextEditor extends Component {
   	}
 
   	_onBoldClick() {
-  		console.log(stateToHTML(this.state.editorState.getCurrentContent()));
+  		// console.log(stateToHTML(this.state.editorState.getCurrentContent()));
     	this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, 'BOLD'));
   	}
 
@@ -61,7 +61,7 @@ class RichTextEditor extends Component {
 				<Paper style={paperStyle}>
 					<Row className="show-grid">
 						<Col md={12}>
-							<div>
+							<div style={{backgroundColor: '#979797'}}>
 								<IconButton
 									onClick={this._onBoldClick.bind(this)}
 									tooltip="BOLD"
@@ -84,6 +84,7 @@ class RichTextEditor extends Component {
 									<FormatUnderlined style={{cursor: 'pointer'}}/>
 								</IconButton>
 							</div>
+							<hr />
           					<Editor 
           						editorState={this.state.editorState}
           						handleKeyCommand={this.handleKeyCommand} 

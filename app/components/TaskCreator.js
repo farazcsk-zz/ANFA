@@ -17,14 +17,16 @@ class TaskCreator extends Component {
 	
 	  this.state = {
 	  	task: {
+	  		name: '',
 	  		type: 'Learn',
 	  		instructions: '',
 	  		answer: '',
-	  		wrongAnswers: ['', '', '']
+	  		wrongAnswers: ['', '', ''],
+	  		sectionId: this.props.params.sectionId
 	  	}
 
 	  };
-	  this.onInstructionsChange = this.onInstructionsChange.bind(this);
+	  this.onNameChange = this.onNameChange.bind(this);
 	  this.onAnswerChange = this.onAnswerChange.bind(this);
 	  this.onWrongChange = this.onWrongChange.bind(this);
 	  this.handleSubmit = this.handleSubmit.bind(this);
@@ -32,45 +34,96 @@ class TaskCreator extends Component {
 
 	}
 
-	onInstructionsChange(e) {
-		this.setState({task: { instructions: e.target.value}});
+	onNameChange(e) {
+		this.setState({
+				task: {
+					name: e.target.value,  
+					type: this.state.task.type, 
+					instructions: this.state.task.instructions, 
+					answer: this.state.task.answer, 
+					wrongAnswers: this.state.task.wrongAnswers,
+					sectionId: this.state.task.sectionId
+				}
+			});
 	}
 
 	onAnswerChange(e) {
-		this.setState({task: { answer: e.target.value}});
+		this.setState({
+				task: { 
+					name: this.state.task.name, 
+					type: this.state.task.type, 
+					instructions: this.state.task.instructions, 
+					answer: e.target.value, 
+					wrongAnswers: this.state.task.wrongAnswers,
+					sectionId: this.state.task.sectionId
+				}
+			});
 	}
 
 	onWrongChange(e) {
 		if (e.target.id === 'wrongAnswer1') {
-			this.setState({task:{wrongAnswers: [e.target.value, this.state.task.wrongAnswers[1], this.state.task.wrongAnswers[2]]}});
+			this.setState({
+				task: {
+					name: this.state.task.name,
+					type: this.state.task.type, 
+					instructions: this.state.task.instructions, 
+					answer: this.state.task.answer,
+					wrongAnswers: [e.target.value, this.state.task.wrongAnswers[1], this.state.task.wrongAnswers[2]],
+					sectionId: this.state.task.sectionId
+				}
+			});
 		} else if (e.target.id === 'wrongAnswer2') {
-			this.setState({task:{wrongAnswers: [this.state.task.wrongAnswers[0], e.target.value, this.state.task.wrongAnswers[2]]}});
+			this.setState({
+				task: {
+					name: this.state.task.name,
+					type: this.state.task.type, 
+					instructions: this.state.task.instructions, 
+					answer: this.state.task.answer,
+					wrongAnswers: [this.state.task.wrongAnswers[0], e.target.value, this.state.task.wrongAnswers[2]],
+					sectionId: this.state.task.sectionId
+				}
+			});
 		} else {
-			this.setState({task:{wrongAnswers: [this.state.task.wrongAnswers[0], this.state.task.wrongAnswers[1], e.target.value]}});
+			this.setState({
+				task: {
+					name: this.state.task.name,
+					type: this.state.task.type, 
+					instructions: this.state.task.instructions, 
+					answer: this.state.task.answer,
+					wrongAnswers: [this.state.task.wrongAnswers[0], this.state.task.wrongAnswers[1], e.target.value],
+					sectionId: this.state.task.sectionId
+				}
+			});
 		}
 	}
 
 	handleTypeChange(value) {
     	this.setState({
-      		task: {type: value},
+      		task: {
+      			name: this.state.task.name,
+      			type: value,
+      			instructions: this.state.task.instructions, 
+				answer: this.state.answer, 
+				wrongAnswers: this.state.task.wrongAnswers,
+				sectionId: this.state.task.sectionId
+      		},
     	});
-    	console.log(this.state.task)
   	};
 	
 	handleSubmit(e) {
-		console.log(this.state)
-		e.preventDefault();
-		$.ajax({
-	      url: "http://localhost:3000/api/Tasks",
-	      dataType: 'json',
-	      type: 'POST',
-	      data: this.state,
-	      success: function(data) {
-	      }.bind(this),
-	      error: function(xhr, status, err) {
-	        console.error(this.props.url, status, err.toString());
-	      }.bind(this)
-    	});
+		console.log(this.state.task)
+		// e.preventDefault();
+		// $.ajax({
+	 //      url: "http://localhost:3000/api/Tasks",
+	 //      dataType: 'json',
+	 //      type: 'POST',
+	 //      data: this.state,
+	 //      success: function(data) {
+	 //      }.bind(this),
+	 //      error: function(xhr, status, err) {
+	 //        console.error(this.props.url, status, err.toString());
+	 //      }.bind(this)
+  //   	});
 	}
 
 	render() {
@@ -102,7 +155,6 @@ class TaskCreator extends Component {
 		const borderStyle = {
 			border: '2px solid #36BA93',
 			marginTop: '2.5vh',
-			marginLeft: '5vw',
 			width: 'inherit'
 		}
 
@@ -129,6 +181,7 @@ class TaskCreator extends Component {
 										floatingLabelFocusStyle={inputStyles.floatingLabelFocusStyle}
 										underlineShow={false}
 		          						style={titleInputStyle}
+		          						onChange={this.onNameChange}
 	          						/>
 	          						<hr />
 	          						<h4 style={{color: '#BBB9BF'}}>Select task type:</h4>
@@ -150,7 +203,7 @@ class TaskCreator extends Component {
         							</Tabs>
 								</Paper>
 							</MuiThemeProvider>
-							
+
 							<RichTextEditor />
 
 			        		<MuiThemeProvider>
