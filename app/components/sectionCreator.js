@@ -27,20 +27,26 @@ class SectionCreator extends Component {
 	}
 
 	handleSubmit(e) {
-		e.preventDefault();
-		$.ajax({
-	      url: "http://localhost:3000/api/Sections?access_token=TbZ4UnDIN1jbRJ1xzVf5mTbEGkjR2kXZjEEeYVqiwHIwgytpFsjYCklHdIrzxBCW",
-	      dataType: 'json',
-	      type: 'POST',
-	      data: this.state.section,
-	      success: function(data) {
-	      	this.props.sectionAdded()
-	      	this.handleClose()
-	      }.bind(this),
-	      error: function(xhr, status, err) {
-	        console.error(this.props.url, status, err.toString());
-	      }.bind(this)
-    	});
+
+		if(this.state.section.title.length > 0) {
+			e.preventDefault();
+			$.ajax({
+		      url: "http://localhost:3000/api/Sections?access_token=TbZ4UnDIN1jbRJ1xzVf5mTbEGkjR2kXZjEEeYVqiwHIwgytpFsjYCklHdIrzxBCW",
+		      dataType: 'json',
+		      type: 'POST',
+		      data: this.state.section,
+		      success: function(data) {
+		      	this.props.sectionAdded()
+		      	this.handleClose()
+		      }.bind(this),
+		      error: function(xhr, status, err) {
+		        console.error(this.props.url, status, err.toString());
+		      }.bind(this)
+	    	});
+		} else {
+			alert('Title cannot be left blank');
+		}
+		
 	}
 	handleOpen() {
     	this.setState({open: true});

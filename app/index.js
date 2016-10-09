@@ -6,6 +6,7 @@ import ViewWorksheets from "./components/ViewWorksheets";
 import WorksheetCreator from "./components/WorksheetCreator";
 import Worksheet from "./components/Worksheet";
 import TaskCreator from "./components/TaskCreator";
+import TaskEditor from "./components/TaskEditor";
 import Home from "./components/Home";
 
 
@@ -17,6 +18,7 @@ render(
         <Route path="/worksheet/new" component={WorksheetCreator}/>
         <Route path="/worksheet/:id" component={Worksheet}/>
         <Route path="/worksheet/:worksheetId/section/:sectionId/task/new" component={TaskCreator}/>
+        <Route path="/worksheet/:worksheetId/section/:sectionId/task/:taskId" component={TaskEditor}/>
       </Route>
     </Router>,
     document.getElementById('app')

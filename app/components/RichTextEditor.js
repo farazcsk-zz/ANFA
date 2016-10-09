@@ -1,11 +1,13 @@
 import React, {Component} from "react";
 import {Editor, EditorState, RichUtils, convertToRaw} from 'draft-js';
 import {stateToHTML} from 'draft-js-export-html';
+import {stateFromHTML} from 'draft-js-import-html';
 import Paper from 'material-ui/Paper';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import FormatBold from 'material-ui/svg-icons/editor/format-bold';
 import FormatItalic from 'material-ui/svg-icons/editor/format-italic';
 import FormatUnderlined from 'material-ui/svg-icons/editor/format-underlined';
+import InsertPhoto from 'material-ui/svg-icons/editor/insert-photo';
 import IconButton from 'material-ui/IconButton';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
@@ -26,6 +28,13 @@ class RichTextEditor extends Component {
 	  };
 	  this.handleKeyCommand = this.handleKeyCommand.bind(this);
 
+	}
+
+	componentWillReceiveProps(nextProps) {
+		if(nextProps.instructions) {
+			var contentState = stateFromHTML(nextProps.instructions);
+			this.setState({editorState: EditorState.createWithContent(contentState)});
+		}
 	}
 
 	handleKeyCommand(command) {
@@ -85,12 +94,22 @@ class RichTextEditor extends Component {
 								>
 									<FormatUnderlined style={{cursor: 'pointer'}}/>
 								</IconButton>
+								<IconButton
+									onClick={this._onUnderlineClick.bind(this)}
+									tooltip="UPLOAD IMAGE"
+									tooltipPosition="top-center"
+								>
+									<InsertPhoto style={{cursor: 'pointer'}}/>
+								</IconButton>
 							</div>
 							<hr />
           					<Editor 
           						editorState={this.state.editorState}
           						handleKeyCommand={this.handleKeyCommand} 
-          						onChange={this.onChange} 
+          						onChange={this.onChange}
+          						readOnly={false}
+          						spellCheck={true}
+
       						/>
           				</Col>
           			</Row>

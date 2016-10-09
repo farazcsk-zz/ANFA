@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import SectionCreator from './sectionCreator';
+import TaskInSection from './TaskInSection';
 import $ from "jquery";
 import {DefaultRoute, RouteHandler, Link, browserHistory} from "react-router";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -27,7 +28,7 @@ class Worksheet extends Component {
 
 	componentDidMount() {
 		$.ajax({
-      		url: "http://localhost:3000/api/Worksheets/" + this.props.params.id +"?filter=%7B%22include%22%3A%7B%22relation%22%3A%22sections%22%7D%7D&access_token=TbZ4UnDIN1jbRJ1xzVf5mTbEGkjR2kXZjEEeYVqiwHIwgytpFsjYCklHdIrzxBCW",
+      		url: "http://localhost:3000/api/Worksheets/" + this.props.params.id +"?filter=%7B%22include%22%3A%7B%22relation%22%3A%22sections%22%2C%22scope%22%3A%7B%22order%22%3A%22number%20ASC%22%2C%22include%22%3A%7B%22relation%22%3A%22tasks%22%2C%22scope%22%3A%7B%22order%22%3A%22number%20ASC%22%7D%7D%7D%7D%7D&access_token=TbZ4UnDIN1jbRJ1xzVf5mTbEGkjR2kXZjEEeYVqiwHIwgytpFsjYCklHdIrzxBCW",
       		dataType: 'json',
       		success: function(data) {
         		this.setState({Worksheet: data});
@@ -40,7 +41,7 @@ class Worksheet extends Component {
 
 	sectionAdded() {
 		$.ajax({
-      		url: "http://localhost:3000/api/Worksheets/" + this.props.params.id +"?filter=%7B%22include%22%3A%7B%22relation%22%3A%22sections%22%7D%7D&access_token=TbZ4UnDIN1jbRJ1xzVf5mTbEGkjR2kXZjEEeYVqiwHIwgytpFsjYCklHdIrzxBCW",
+      		url: "http://localhost:3000/api/Worksheets/" + this.props.params.id +"?filter=%7B%22include%22%3A%7B%22relation%22%3A%22sections%22%2C%22scope%22%3A%7B%22order%22%3A%22number%20ASC%22%2C%22include%22%3A%7B%22relation%22%3A%22tasks%22%2C%22scope%22%3A%7B%22order%22%3A%22number%20ASC%22%7D%7D%7D%7D%7D&access_token=TbZ4UnDIN1jbRJ1xzVf5mTbEGkjR2kXZjEEeYVqiwHIwgytpFsjYCklHdIrzxBCW",
       		dataType: 'json',
       		success: function(data) {
         		this.setState({Worksheet: data});
@@ -101,19 +102,34 @@ class Worksheet extends Component {
 		}
 
 		var sections = this.state.Worksheet.sections.map((section) => {
+
+			var tasks = section.tasks.map((task) =>{
+				return (
+					<TaskInSection 
+						key={task.id} 
+						name={task.name} 
+						worksheetId={section.worksheetId} 
+						sectionId={task.sectionId} 
+						taskId={task.id} 
+					/>
+				);
+			});
+
 			return (
 				<Card key={section.id}>
 				    <CardHeader
 				      title={section.title}
-				      subtitle={section.id}
+				      subtitle={section.tasks.length + ' tasks'}
 				      actAsExpander={true}
 				      showExpandableButton={true}
 				    />
 				    <CardActions>
 				    </CardActions>
 				    <CardText expandable={true}>
+				      {tasks}
 				      <Row className="show-grid">
 				      	<Col md={6} mdOffset={4}>
+				      		
 				      		<Link to={{pathname:"/worksheet/" + this.state.Worksheet.id + "/section/" + section.id + "/task/new" }}>
 					      		<FlatButton 
 									label="Add task"

@@ -11,14 +11,14 @@ import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
-class TaskCreator extends Component {
+class TaskEditor extends Component {
 	constructor(props) {
 	  super(props);
 	
 	  this.state = {
 	  	task: {
 	  		name: '',
-	  		type: 'Learn',
+	  		type: '',
 	  		instructions: '',
 	  		answer: '',
 	  		wrongAnswers: ['', '', ''],
@@ -35,6 +35,19 @@ class TaskCreator extends Component {
 
 	}
 
+	componentDidMount() {
+		$.ajax({
+	      url: "http://localhost:3000/api/Tasks/" + this.props.params.taskId,
+	      dataType: 'json',
+	      success: function(data) {
+	      	console.log(data);
+	      	this.setState({task: data});
+	      }.bind(this),
+	      error: function(xhr, status, err) {
+	        console.error(this.props.url, status, err.toString());
+	      }.bind(this)
+		});
+	}
 	onInstructionsChange(instructions) {
 		this.setState({
 				task: {
@@ -132,7 +145,7 @@ class TaskCreator extends Component {
 			$.ajax({
 		      url: "http://localhost:3000/api/Tasks",
 		      dataType: 'json',
-		      type: 'POST',
+		      type: 'PUT',
 		      data: this.state.task,
 		      success: function(data) {
 		      }.bind(this),
@@ -196,12 +209,13 @@ class TaskCreator extends Component {
 								<Paper style={paperStyle}>
 									<TextField 
 		          						id="question" 
-		          						floatingLabelText="Enter task name" 
+		          						placeholder="Enter task name" 
 		          						underlineFocusStyle={inputStyles.underlineStyle}
 										floatingLabelFocusStyle={inputStyles.floatingLabelFocusStyle}
 										underlineShow={false}
 		          						style={titleInputStyle}
 		          						onChange={this.onNameChange}
+		          						value={this.state.task.name}
 	          						/>
 	          						<hr />
 	          						<h4 style={{color: '#BBB9BF'}}>Select task type:</h4>
@@ -224,7 +238,10 @@ class TaskCreator extends Component {
 								</Paper>
 							</MuiThemeProvider>
 
-							<RichTextEditor updateInstructions={this.onInstructionsChange} />
+							<RichTextEditor 
+								updateInstructions={this.onInstructionsChange} 
+								instructions={this.state.task.instructions} 
+							/>
 
 			        		{this.state.task.type != 'Learn' ? <MuiThemeProvider>
 			        			<Paper style={paperStyle}>
@@ -238,6 +255,7 @@ class TaskCreator extends Component {
 						          						underlineFocusStyle={inputStyles.underlineStyle}
 														floatingLabelFocusStyle={inputStyles.floatingLabelFocusStyle} 
 						          						onChange={this.onAnswerChange}
+						          						value={this.state.task.answer}
 					          						/>
 				          						</Col>
 			          						</Row>
@@ -249,6 +267,7 @@ class TaskCreator extends Component {
 							          					underlineFocusStyle={inputStyles.underlineStyle}
 														floatingLabelFocusStyle={inputStyles.floatingLabelFocusStyle} 
 							          					onChange={this.onWrongChange}
+							          					value={this.state.task.wrongAnswers[0]}
 						          					/>
 					          					</Col>
 			          						</Row>
@@ -261,6 +280,7 @@ class TaskCreator extends Component {
 						          						underlineFocusStyle={inputStyles.underlineStyle}
 														floatingLabelFocusStyle={inputStyles.floatingLabelFocusStyle} 
 						          						onChange={this.onWrongChange}
+						          						value={this.state.task.wrongAnswers[1]}
 					          						/>
 					          					</Col>
 			          						</Row>
@@ -273,6 +293,7 @@ class TaskCreator extends Component {
 							          					underlineFocusStyle={inputStyles.underlineStyle}
 														floatingLabelFocusStyle={inputStyles.floatingLabelFocusStyle} 
 							          					onChange={this.onWrongChange}
+							          					value={this.state.task.wrongAnswers[2]}
 						          					/>
 					          					</Col>
 				          					</Row>
@@ -300,4 +321,4 @@ class TaskCreator extends Component {
 		)
 	}
 }
-export default TaskCreator
+export default TaskEditor

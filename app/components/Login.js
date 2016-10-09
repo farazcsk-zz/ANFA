@@ -8,14 +8,20 @@ import FlatButton from 'material-ui/FlatButton';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
+import TastyNotification from './TastyNotification';
 
 class Login extends Component {
 	constructor(props) {
 	  super(props);
 	
 	  this.state = {
-	  	username: '',
-	  	password: ''
+	  	details: {
+	  		username: '',
+	  		password: ''
+	  	},
+
+	  	error: false
+	  	
 	  };
 
 	  this.onUsernameChange = this.onUsernameChange.bind(this);
@@ -29,23 +35,34 @@ class Login extends Component {
 	      url: "http://localhost:3000/api/Accounts/login",
 	      dataType: 'json',
 	      type: 'POST',
-	      data: this.state,
+	      data: this.state.details,
 	      success: function(data) {
 	      	console.log(data);
 	        browserHistory.push('/worksheets');
 	      }.bind(this),
 	      error: function(xhr, status, err) {
+	      	this.setState({error: true})
 	        console.error(this.props.url, status, err.toString());
 	      }.bind(this)
     	});
 	}
 
 	onUsernameChange(e) {
-		this.setState({username: e.target.value});
+		this.setState({
+			details: {
+				username: e.target.value,
+				password: this.state.details.password
+			}
+		});
 	}
 
 	onPasswordChange(e) {
-		this.setState({password: e.target.value});
+		this.setState({
+			details: {
+				username: this.state.details.username,
+				password: e.target.value
+			}
+		});
 	}
 
 	
@@ -136,6 +153,7 @@ class Login extends Component {
 									/>
 								</Paper>
 							</MuiThemeProvider>
+							<TastyNotification  open={this.state.error} message="Username or Password is incorrect."/>
 						</Col>
 					</Row>
 				</Grid>
