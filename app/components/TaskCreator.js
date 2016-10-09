@@ -131,7 +131,7 @@ class TaskCreator extends Component {
 	      url: "http://localhost:3000/api/Tasks",
 	      dataType: 'json',
 	      type: 'POST',
-	      data: this.state,
+	      data: this.state.task,
 	      success: function(data) {
 	      }.bind(this),
 	      error: function(xhr, status, err) {
