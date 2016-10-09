@@ -13,6 +13,12 @@ class TaskInSection extends Component {
 	}
 
 	render() {
+
+		const controlStyle = {
+			display: 'inline-block',
+			margin: 5,
+			cursor: 'pointer'
+		}
 		
 		return (
 			<div>
@@ -20,7 +26,13 @@ class TaskInSection extends Component {
       				<Subheader>Tasks</Subheader>
 				    <ListItem
 				        primaryText={this.props.name}
-				    />
+				    >
+				    	<div style={{float: 'right', fontWeight: 'bold'}}>
+				    		<p style={controlStyle}>EDIT</p>
+				    		<p style={controlStyle}>PREVIEW</p>
+				    		<p style={controlStyle}>DELETE</p>
+				    	</div>
+				    </ListItem>
 			    </List>
 			</div>
 		)
