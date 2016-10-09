@@ -31,7 +31,21 @@ class TaskCreator extends Component {
 	  this.onWrongChange = this.onWrongChange.bind(this);
 	  this.handleSubmit = this.handleSubmit.bind(this);
 	  this.handleTypeChange = this.handleTypeChange.bind(this);
+	  this.onInstructionsChange = this.onInstructionsChange.bind(this);
 
+	}
+
+	onInstructionsChange(instructions) {
+		this.setState({
+				task: {
+					name: this.state.task.name,  
+					type: this.state.task.type, 
+					instructions: instructions, 
+					answer: this.state.task.answer, 
+					wrongAnswers: this.state.task.wrongAnswers,
+					sectionId: this.state.task.sectionId
+				}
+			});
 	}
 
 	onNameChange(e) {
@@ -112,18 +126,18 @@ class TaskCreator extends Component {
 	
 	handleSubmit(e) {
 		console.log(this.state.task)
-		// e.preventDefault();
-		// $.ajax({
-	 //      url: "http://localhost:3000/api/Tasks",
-	 //      dataType: 'json',
-	 //      type: 'POST',
-	 //      data: this.state,
-	 //      success: function(data) {
-	 //      }.bind(this),
-	 //      error: function(xhr, status, err) {
-	 //        console.error(this.props.url, status, err.toString());
-	 //      }.bind(this)
-  //   	});
+		e.preventDefault();
+		$.ajax({
+	      url: "http://localhost:3000/api/Tasks",
+	      dataType: 'json',
+	      type: 'POST',
+	      data: this.state,
+	      success: function(data) {
+	      }.bind(this),
+	      error: function(xhr, status, err) {
+	        console.error(this.props.url, status, err.toString());
+	      }.bind(this)
+    	});
 	}
 
 	render() {
@@ -133,7 +147,7 @@ class TaskCreator extends Component {
 			}
 		}
 		const titleInputStyle = {
-			fontSize: '3vh',
+			fontSize: '2.5vh',
 		}
 		const paperStyle = {
 		  height: '100%',
@@ -204,7 +218,7 @@ class TaskCreator extends Component {
 								</Paper>
 							</MuiThemeProvider>
 
-							<RichTextEditor />
+							<RichTextEditor updateInstructions={this.onInstructionsChange} />
 
 			        		<MuiThemeProvider>
 			        			<Paper style={paperStyle}>

@@ -20,7 +20,10 @@ class RichTextEditor extends Component {
 	  this.state = {
 	  	editorState: EditorState.createEmpty()
 	  };
-	  this.onChange = (editorState) => this.setState({editorState});
+	  this.onChange = (editorState) => {
+	  	this.setState({editorState})
+	  	this.props.updateInstructions(stateToHTML(this.state.editorState.getCurrentContent()));
+	  };
 	  this.handleKeyCommand = this.handleKeyCommand.bind(this);
 
 	}
@@ -35,7 +38,6 @@ class RichTextEditor extends Component {
   	}
 
   	_onBoldClick() {
-  		// console.log(stateToHTML(this.state.editorState.getCurrentContent()));
     	this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, 'BOLD'));
   	}
 
