@@ -220,7 +220,7 @@ class TaskCreator extends Component {
 
 							<RichTextEditor updateInstructions={this.onInstructionsChange} />
 
-			        		<MuiThemeProvider>
+			        		{this.state.task.type != 'Learn' ? <MuiThemeProvider>
 			        			<Paper style={paperStyle}>
 			        				<Row className="show-grid">
 				          				<Col md={12}>
@@ -273,7 +273,7 @@ class TaskCreator extends Component {
 				          				</Col>
 			          				</Row>
 			        			</Paper>
-			        		</MuiThemeProvider>
+			        		</MuiThemeProvider> : null }
 	        			</Col>
 	        			<Col md={2}>
 	        				<MuiThemeProvider>
