@@ -28,7 +28,9 @@ class TaskInSection extends Component {
 				        primaryText={this.props.name}
 				    >
 				    	<div style={{float: 'right', fontWeight: 'bold'}}>
-				    		<p style={controlStyle}>EDIT</p>
+				    		<Link to={{pathname:"/worksheet/" + this.props.worksheetId + "/section/" +this.props.sectionId + "/task/" + this.props.taskId }}>
+				    			<p style={controlStyle}>EDIT</p>
+				    		</Link>
 				    		<p style={controlStyle}>PREVIEW</p>
 				    		<p style={controlStyle}>DELETE</p>
 				    	</div>

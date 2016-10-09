@@ -105,7 +105,13 @@ class Worksheet extends Component {
 
 			var tasks = section.tasks.map((task) =>{
 				return (
-					<TaskInSection key={task.id} name={task.name} />
+					<TaskInSection 
+						key={task.id} 
+						name={task.name} 
+						worksheetId={section.worksheetId} 
+						sectionId={task.sectionId} 
+						taskId={task.id} 
+					/>
 				);
 			});
 
