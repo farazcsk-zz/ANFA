@@ -32,7 +32,6 @@ class RichTextEditor extends Component {
 
 	componentWillReceiveProps(nextProps) {
 		//check if next prop is the same as the previous?
-		console.log(nextProps.instructions)
 		if(nextProps.instructions) {
 			var contentState = stateFromHTML(nextProps.instructions);
 			this.setState({editorState: EditorState.createWithContent(contentState)});

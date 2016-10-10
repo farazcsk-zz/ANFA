@@ -295,7 +295,10 @@ class TaskCreator extends Component {
 									label="Save" 
 									onClick={this.handleSubmit} 
 								/>
-								 <CircularProgress />
+								 
+							</MuiThemeProvider>
+							<MuiThemeProvider>
+								<CircularProgress />
 							</MuiThemeProvider>
 	        			</Col>
 	        			<TastyNotification  open={this.state.error} message="Instructions cannot be left blank."/>

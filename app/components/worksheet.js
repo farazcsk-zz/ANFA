@@ -24,7 +24,12 @@ class Worksheet extends Component {
 	  };
 
 	  this.sectionAdded = this.sectionAdded.bind(this);
+	  this.setModalVisible = this.setModalVisible.bind(this);
 	}
+
+	setModalVisible(visible) {
+    	this.setState({modalVisible: visible});
+  	}
 
 	componentDidMount() {
 		$.ajax({
