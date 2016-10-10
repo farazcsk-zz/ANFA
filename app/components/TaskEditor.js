@@ -254,7 +254,7 @@ class TaskEditor extends Component {
 
 							<RichTextEditor 
 								updateInstructions={this.onInstructionsChange} 
-								instructions={this.state.task.instructions} 
+								taskId={this.state.task.id} 
 							/>
 
 			        		{this.state.task.type != 'Learn' ? <MuiThemeProvider>

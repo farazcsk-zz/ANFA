@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import $ from "jquery";
 import {Editor, EditorState, RichUtils, convertToRaw} from 'draft-js';
 import {stateToHTML} from 'draft-js-export-html';
 import {stateFromHTML} from 'draft-js-import-html';
@@ -31,10 +32,19 @@ class RichTextEditor extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		//check if next prop is the same as the previous?
-		if(nextProps.instructions) {
-			var contentState = stateFromHTML(nextProps.instructions);
-			this.setState({editorState: EditorState.createWithContent(contentState)});
+		if(nextProps.taskId !== this.props.taskId) {
+			$.ajax({
+		      url: "http://localhost:3000/api/Tasks/" + nextProps.taskId,
+		      dataType: 'json',
+		      success: function(data) {
+		      	console.log(data);
+		      	var contentState = stateFromHTML(data.instructions);
+				this.setState({editorState: EditorState.createWithContent(contentState)});
+		      }.bind(this),
+		      error: function(xhr, status, err) {
+		        console.error(this.props.url, status, err.toString());
+		      }.bind(this)
+			});
 		}
 	}
 
