@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import $ from "jquery";
+import {DefaultRoute, RouteHandler, Link, browserHistory} from "react-router";
 import RichTextEditor from './RichTextEditor';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Paper from 'material-ui/Paper';
@@ -160,6 +161,7 @@ class TaskEditor extends Component {
 		      type: 'PUT',
 		      data: this.state.task,
 		      success: function(data) {
+		      	browserHistory.push('/worksheet/' + this.props.params.worksheetId);
 		      }.bind(this),
 		      error: function(xhr, status, err) {
 		        console.error(this.props.url, status, err.toString());

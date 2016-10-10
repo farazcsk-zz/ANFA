@@ -10,8 +10,12 @@ class TaskInSection extends Component {
 	  super(props);
 	
 	  this.state = {};
+	  this.handleEdit = this.handleEdit.bind(this);
 	}
 
+	handleEdit() {
+		browserHistory.push('/worksheet/' + this.props.worksheetId + "/section/" +this.props.sectionId + "/task/" + this.props.taskId);
+	}
 	render() {
 
 		const controlStyle = {
@@ -23,14 +27,11 @@ class TaskInSection extends Component {
 		return (
 			<div>
 				<List>
-      				<Subheader>Tasks</Subheader>
 				    <ListItem
 				        primaryText={this.props.name}
 				    >
 				    	<div style={{float: 'right', fontWeight: 'bold'}}>
-				    		<Link to={{pathname:"/worksheet/" + this.props.worksheetId + "/section/" +this.props.sectionId + "/task/" + this.props.taskId }}>
-				    			<p style={controlStyle}>EDIT</p>
-				    		</Link>
+				    		<p onClick={this.handleEdit} style={controlStyle}>EDIT</p>
 				    		<p style={controlStyle}>PREVIEW</p>
 				    		<p style={controlStyle}>DELETE</p>
 				    	</div>
