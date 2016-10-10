@@ -7,6 +7,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import Paper from 'material-ui/Paper';
 import FlatButton from 'material-ui/FlatButton';
+import Subheader from 'material-ui/Subheader';
 import Accordion from 'react-bootstrap/lib/Accordion';
 import Panel from 'react-bootstrap/lib/Panel';
 import Grid from 'react-bootstrap/lib/Grid';
@@ -24,7 +25,12 @@ class Worksheet extends Component {
 	  };
 
 	  this.sectionAdded = this.sectionAdded.bind(this);
+	  this.setModalVisible = this.setModalVisible.bind(this);
 	}
+
+	setModalVisible(visible) {
+    	this.setState({modalVisible: visible});
+  	}
 
 	componentDidMount() {
 		$.ajax({
@@ -126,22 +132,23 @@ class Worksheet extends Component {
 				    <CardActions>
 				    </CardActions>
 				    <CardText expandable={true}>
-				      {tasks}
-				      <Row className="show-grid">
-				      	<Col md={6} mdOffset={4}>
-				      		
-				      		<Link to={{pathname:"/worksheet/" + this.state.Worksheet.id + "/section/" + section.id + "/task/new" }}>
-					      		<FlatButton 
-									label="Add task"
-									style={borderStyle}
-									rippleColor={buttonStyles.rippleColor} 
-									backgroundColor={buttonStyles.backgroundColor} 
-									labelStyle={buttonStyles.labelStyle}
-									hoverColor={buttonStyles.backgroundColor}  
-								/>
-							</Link>
-				      	</Col>
-				      </Row>
+				    	<Subheader>Tasks</Subheader>
+				      	{tasks}
+					      <Row className="show-grid">
+					      	<Col md={6} mdOffset={4}>
+					      		
+					      		<Link to={{pathname:"/worksheet/" + this.state.Worksheet.id + "/section/" + section.id + "/task/new" }}>
+						      		<FlatButton 
+										label="Add task"
+										style={borderStyle}
+										rippleColor={buttonStyles.rippleColor} 
+										backgroundColor={buttonStyles.backgroundColor} 
+										labelStyle={buttonStyles.labelStyle}
+										hoverColor={buttonStyles.backgroundColor}  
+									/>
+								</Link>
+					      	</Col>
+					      </Row>
 				    </CardText>
  				</Card>
       		); 

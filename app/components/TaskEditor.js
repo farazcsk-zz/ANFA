@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import $ from "jquery";
+import {DefaultRoute, RouteHandler, Link, browserHistory} from "react-router";
 import RichTextEditor from './RichTextEditor';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Paper from 'material-ui/Paper';
@@ -10,6 +11,8 @@ import Divider from 'material-ui/Divider';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
+import TastyNotification from './TastyNotification';
+import CircularProgress from 'material-ui/CircularProgress';
 
 class TaskEditor extends Component {
 	constructor(props) {
@@ -17,15 +20,17 @@ class TaskEditor extends Component {
 	
 	  this.state = {
 	  	task: {
+	  		id: '',
 	  		name: '',
 	  		type: '',
 	  		instructions: '',
 	  		answer: '',
 	  		wrongAnswers: ['', '', ''],
 	  		sectionId: this.props.params.sectionId
-	  	}
-
+	  	},
+	  	loading: false
 	  };
+
 	  this.onNameChange = this.onNameChange.bind(this);
 	  this.onAnswerChange = this.onAnswerChange.bind(this);
 	  this.onWrongChange = this.onWrongChange.bind(this);
@@ -48,9 +53,11 @@ class TaskEditor extends Component {
 	      }.bind(this)
 		});
 	}
+
 	onInstructionsChange(instructions) {
 		this.setState({
 				task: {
+					id: this.state.task.id,
 					name: this.state.task.name,  
 					type: this.state.task.type, 
 					instructions: instructions, 
@@ -64,6 +71,7 @@ class TaskEditor extends Component {
 	onNameChange(e) {
 		this.setState({
 				task: {
+					id: this.state.task.id,
 					name: e.target.value,  
 					type: this.state.task.type, 
 					instructions: this.state.task.instructions, 
@@ -77,6 +85,7 @@ class TaskEditor extends Component {
 	onAnswerChange(e) {
 		this.setState({
 				task: { 
+					id: this.state.task.id,
 					name: this.state.task.name, 
 					type: this.state.task.type, 
 					instructions: this.state.task.instructions, 
@@ -91,6 +100,7 @@ class TaskEditor extends Component {
 		if (e.target.id === 'wrongAnswer1') {
 			this.setState({
 				task: {
+					id: this.state.task.id,
 					name: this.state.task.name,
 					type: this.state.task.type, 
 					instructions: this.state.task.instructions, 
@@ -102,6 +112,7 @@ class TaskEditor extends Component {
 		} else if (e.target.id === 'wrongAnswer2') {
 			this.setState({
 				task: {
+					id: this.state.task.id,
 					name: this.state.task.name,
 					type: this.state.task.type, 
 					instructions: this.state.task.instructions, 
@@ -113,6 +124,7 @@ class TaskEditor extends Component {
 		} else {
 			this.setState({
 				task: {
+					id: this.state.task.id,
 					name: this.state.task.name,
 					type: this.state.task.type, 
 					instructions: this.state.task.instructions, 
@@ -127,6 +139,7 @@ class TaskEditor extends Component {
 	handleTypeChange(value) {
     	this.setState({
       		task: {
+      			id: this.state.task.id,
       			name: this.state.task.name,
       			type: value,
       			instructions: this.state.task.instructions, 
@@ -138,7 +151,7 @@ class TaskEditor extends Component {
   	};
 	
 	handleSubmit(e) {
-
+		this.setState({loading:true});
 		if(this.state.task.instructions.length > 0) {
 			console.log(this.state.task)
 			e.preventDefault();
@@ -148,13 +161,14 @@ class TaskEditor extends Component {
 		      type: 'PUT',
 		      data: this.state.task,
 		      success: function(data) {
+		      	browserHistory.push('/worksheet/' + this.props.params.worksheetId);
 		      }.bind(this),
 		      error: function(xhr, status, err) {
 		        console.error(this.props.url, status, err.toString());
 		      }.bind(this)
     		});
 		} else {
-			alert('Instructions cannot be left blank');
+			this.setState({error:true});
 		}
 		
 	}
@@ -240,7 +254,7 @@ class TaskEditor extends Component {
 
 							<RichTextEditor 
 								updateInstructions={this.onInstructionsChange} 
-								instructions={this.state.task.instructions} 
+								taskId={this.state.task.id} 
 							/>
 
 			        		{this.state.task.type != 'Learn' ? <MuiThemeProvider>
@@ -303,18 +317,33 @@ class TaskEditor extends Component {
 			        		</MuiThemeProvider> : null }
 	        			</Col>
 	        			<Col md={2}>
-	        				<MuiThemeProvider>
-	        					<FlatButton 
-									style={borderStyle}
-									rippleColor={buttonStyles.rippleColor} 
-									backgroundColor={buttonStyles.backgroundColor} 
-									labelStyle={buttonStyles.labelStyle}
-									hoverColor={buttonStyles.backgroundColor} 
-									label="Save" 
-									onClick={this.handleSubmit} 
-								/>
-							</MuiThemeProvider>
+	        				{!this.state.loading ?
+		        				<div>
+			        				 <MuiThemeProvider>
+			        					<FlatButton 
+											style={borderStyle}
+											rippleColor={buttonStyles.rippleColor} 
+											backgroundColor={buttonStyles.backgroundColor} 
+											labelStyle={buttonStyles.labelStyle}
+											hoverColor={buttonStyles.backgroundColor} 
+											label="Save" 
+											onClick={this.handleSubmit} 
+										/>
+
+									</MuiThemeProvider>
+								</div> : 
+								<div>
+									<MuiThemeProvider>
+										<CircularProgress 
+											size={0.5} 
+											color='#36BA93'
+											style={{marginLeft: 15}} 
+										/>
+									</MuiThemeProvider> 
+								</div>
+							}
 	        			</Col>
+	        			<TastyNotification  open={this.state.error} message="Instructions cannot be left blank."/>
 					</Row>
 	    		</Grid>
 			</div>

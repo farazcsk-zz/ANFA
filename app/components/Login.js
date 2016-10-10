@@ -20,7 +20,8 @@ class Login extends Component {
 	  		password: ''
 	  	},
 
-	  	error: false
+	  	error: false,
+	  	loading: false
 	  	
 	  };
 
@@ -30,6 +31,7 @@ class Login extends Component {
 	}
 
 	handleSubmit(e) {
+		this.setState({loading: true});
 		e.preventDefault();
 		$.ajax({
 	      url: "http://localhost:3000/api/Accounts/login",
@@ -41,7 +43,13 @@ class Login extends Component {
 	        browserHistory.push('/worksheets');
 	      }.bind(this),
 	      error: function(xhr, status, err) {
-	      	this.setState({error: true})
+	      	this.setState({
+	      		details: {
+					username: this.state.details.username,
+					password: this.state.details.password
+				},
+	      		error: true
+	      	})
 	        console.error(this.props.url, status, err.toString());
 	      }.bind(this)
     	});
@@ -52,7 +60,8 @@ class Login extends Component {
 			details: {
 				username: e.target.value,
 				password: this.state.details.password
-			}
+			},
+			error: false
 		});
 	}
 
@@ -61,7 +70,8 @@ class Login extends Component {
 			details: {
 				username: this.state.details.username,
 				password: e.target.value
-			}
+			},
+			error: false
 		});
 	}
 
@@ -142,15 +152,33 @@ class Login extends Component {
 										</Col>
 									</Row>
 									<br />
-									<FlatButton 
-										style={borderStyle}
-										rippleColor={buttonStyles.rippleColor} 
-										backgroundColor={buttonStyles.backgroundColor} 
-										labelStyle={buttonStyles.labelStyle}
-										hoverColor={buttonStyles.backgroundColor} 
-										label="Login" 
-										onClick={this.handleSubmit} 
-									/>
+
+									{!this.state.loading ?
+					    				<div>
+					        				 <MuiThemeProvider>
+					        					<FlatButton 
+													style={borderStyle}
+													rippleColor={buttonStyles.rippleColor} 
+													backgroundColor={buttonStyles.backgroundColor} 
+													labelStyle={buttonStyles.labelStyle}
+													hoverColor={buttonStyles.backgroundColor} 
+													label="Login" 
+													onClick={this.handleSubmit} 
+												/>
+
+											</MuiThemeProvider>
+										</div> : 
+										<div>
+											<MuiThemeProvider>
+												<CircularProgress 
+													size={0.5} 
+													color='#36BA93'
+													style={{marginLeft: 15}} 
+												/>
+											</MuiThemeProvider> 
+										</div>
+									}
+									
 								</Paper>
 							</MuiThemeProvider>
 							<TastyNotification  open={this.state.error} message="Username or Password is incorrect."/>
