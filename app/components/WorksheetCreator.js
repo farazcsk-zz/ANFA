@@ -160,24 +160,42 @@ class WorksheetCreator extends Component {
 			          						/>
 		          						</Col>
 		          						<Col md={2}>	
-											<FlatButton 
-												label="Create"
-												style={borderStyle}
-												rippleColor={buttonStyles.rippleColor} 
-												backgroundColor={buttonStyles.backgroundColor} 
-												labelStyle={buttonStyles.labelStyle}
-												hoverColor={buttonStyles.backgroundColor} 
-												onClick={this.handleSubmit} 
-											/>
-											<FlatButton 
-												label="Cancel"
-												style={darkBorderStyle}
-												rippleColor={darkButtonStyles.rippleColor} 
-												backgroundColor={darkButtonStyles.backgroundColor} 
-												labelStyle={darkButtonStyles.labelStyle}
-												hoverColor={darkButtonStyles.backgroundColor} 
-												onClick={this.handleCancel} 
-											/>
+											{!this.state.loading ?
+							    				<div>
+							        				 <MuiThemeProvider>
+							        					<FlatButton 
+															label="Create"
+															style={borderStyle}
+															rippleColor={buttonStyles.rippleColor} 
+															backgroundColor={buttonStyles.backgroundColor} 
+															labelStyle={buttonStyles.labelStyle}
+															hoverColor={buttonStyles.backgroundColor} 
+															onClick={this.handleSubmit} 
+														/>
+													</MuiThemeProvider>
+													
+													<MuiThemeProvider>
+														<FlatButton 
+															label="Cancel"
+															style={darkBorderStyle}
+															rippleColor={darkButtonStyles.rippleColor} 
+															backgroundColor={darkButtonStyles.backgroundColor} 
+															labelStyle={darkButtonStyles.labelStyle}
+															hoverColor={darkButtonStyles.backgroundColor} 
+															onClick={this.handleCancel} 
+														/>
+													</MuiThemeProvider>
+												</div> : 
+												<div>
+													<MuiThemeProvider>
+														<CircularProgress 
+															size={0.5} 
+															color='#36BA93'
+															style={{marginLeft: 15}} 
+														/>
+													</MuiThemeProvider> 
+												</div>
+											}
 										</Col>
 									</Row>
 					    		</Paper>

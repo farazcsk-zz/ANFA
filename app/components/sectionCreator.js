@@ -19,7 +19,8 @@ class SectionCreator extends Component {
 	  	open: false,
 	  	section: {
 	  		title: ''
-	  	}
+	  	},
+	  	loading: false
 	  };
 
 	  this.handleOpen = this.handleOpen.bind(this);
@@ -29,7 +30,7 @@ class SectionCreator extends Component {
 	}
 
 	handleSubmit(e) {
-
+		this.setState({loading: true});
 		if(this.state.section.title.length > 0) {
 			e.preventDefault();
 			$.ajax({
@@ -109,16 +110,35 @@ class SectionCreator extends Component {
 						floatingLabelText="Enter section title" 
 						onChange={this.onTitleChange}
 				  	/>
-				  	<FlatButton 
-						label="Create"
-						style={borderStyle}
-						rippleColor={buttonStyles.rippleColor} 
-						backgroundColor={buttonStyles.backgroundColor} 
-						labelStyle={buttonStyles.labelStyle}
-						hoverColor={buttonStyles.backgroundColor}
-						onClick={this.handleSubmit}  
-					/>
-					<CircularProgress />
+
+
+
+				  	{!this.state.loading ?
+	    				<div>
+	        				 <MuiThemeProvider>
+	        					<FlatButton 
+									label="Create"
+									style={borderStyle}
+									rippleColor={buttonStyles.rippleColor} 
+									backgroundColor={buttonStyles.backgroundColor} 
+									labelStyle={buttonStyles.labelStyle}
+									hoverColor={buttonStyles.backgroundColor}
+									onClick={this.handleSubmit}  
+								/>
+
+							</MuiThemeProvider>
+						</div> : 
+						<div>
+							<MuiThemeProvider>
+								<CircularProgress 
+									size={0.5} 
+									color='#36BA93'
+									style={{marginLeft: 15}} 
+								/>
+							</MuiThemeProvider> 
+						</div>
+					}
+				  	
     			</Dialog>
     			<TastyNotification  open={this.state.error} message="Title cannot be left blank."/>
 			</div>
