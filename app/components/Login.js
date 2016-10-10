@@ -8,7 +8,8 @@ import FlatButton from 'material-ui/FlatButton';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
-import TastyNotification from './TastyNotification';
+import CircularProgress from 'material-ui/CircularProgress';
+import Snackbar from 'material-ui/Snackbar';
 
 class Login extends Component {
 	constructor(props) {
@@ -28,6 +29,7 @@ class Login extends Component {
 	  this.onUsernameChange = this.onUsernameChange.bind(this);
 	  this.onPasswordChange = this.onPasswordChange.bind(this);
 	  this.handleSubmit = this.handleSubmit.bind(this); 
+	  this.handleErrorRequestClose = this.handleErrorRequestClose.bind(this);
 	}
 
 	handleSubmit(e) {
@@ -44,11 +46,8 @@ class Login extends Component {
 	      }.bind(this),
 	      error: function(xhr, status, err) {
 	      	this.setState({
-	      		details: {
-					username: this.state.details.username,
-					password: this.state.details.password
-				},
-	      		error: true
+	      		error: true,
+	      		loading: false
 	      	})
 	        console.error(this.props.url, status, err.toString());
 	      }.bind(this)
@@ -74,6 +73,12 @@ class Login extends Component {
 			error: false
 		});
 	}
+
+	handleErrorRequestClose()  {
+	    this.setState({
+	      open: false,
+	    });
+  	};
 
 	
 	render() {
@@ -181,7 +186,14 @@ class Login extends Component {
 									
 								</Paper>
 							</MuiThemeProvider>
-							<TastyNotification  open={this.state.error} message="Username or Password is incorrect."/>
+							<MuiThemeProvider>
+								<Snackbar
+						          open={this.state.error}
+						          message="Username or password is incorrect."
+						          autoHideDuration={4000}
+						          onRequestClose={this.handleRequestClose}
+	        					/>
+        					</MuiThemeProvider>
 						</Col>
 					</Row>
 				</Grid>

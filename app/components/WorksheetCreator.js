@@ -9,49 +9,70 @@ import Divider from 'material-ui/Divider';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
-import TastyNotification from './TastyNotification';
+import CircularProgress from 'material-ui/CircularProgress';
+import Snackbar from 'material-ui/Snackbar';
 
 class WorksheetCreator extends Component {
 	constructor(props) {
 	  super(props);
 	
 	  this.state = {
-	  	title: '',
-	  	desciption: ''
+	  	worksheet:{
+	  		title: '',
+	  		desciption: ''
+	  	},
+	  	loading: false,
+	  	error: false
+	  	
 	  };
 
 	  this.onTitleChange = this.onTitleChange.bind(this);
 	  this.onDescriptionChange = this.onDescriptionChange.bind(this);
 	  this.handleSubmit = this.handleSubmit.bind(this);
+	  this.handleErrorRequestClose = this.handleErrorRequestClose.bind(this);
 
 	}
 
+	handleErrorRequestClose()  {
+	    this.setState({
+	      open: false,
+	    });
+  	};
+
 	onTitleChange(e) {
-		this.setState({title: e.target.value});
+		this.setState({worksheet:{title: e.target.value, description: this.state.worksheet.description}});
 	}
 
 	onDescriptionChange(e) {
-		this.setState({description: e.target.value});
+		this.setState({worksheet:{title:this.state.worksheet.title,description: e.target.value}});
 	}
 
 	handleSubmit(e) {
-		if(this.state.title.length > 0){
+		this.setState({loading: true});
+		if(this.state.worksheet.title.length > 0){
 			e.preventDefault();
 			$.ajax({
 		      url: "http://localhost:3000/api/Worksheets",
 		      dataType: 'json',
 		      type: 'POST',
-		      data: this.state,
+		      data: this.state.worksheet,
 		      success: function(data) {
 		      	browserHistory.push('/worksheet/' + data.id);
 
 		      }.bind(this),
 		      error: function(xhr, status, err) {
+		      	this.setState({
+		      		error: true,
+		      		loading: false
+	      		})
 		        console.error(this.props.url, status, err.toString());
 		      }.bind(this)
 	    	});
 		} else {
-			this.setState({error:true});
+			this.setState({
+				error:true,
+				loading: false
+			});
 		}
 	}
 
@@ -200,7 +221,14 @@ class WorksheetCreator extends Component {
 									</Row>
 					    		</Paper>
 				    		</MuiThemeProvider>
-				    		<TastyNotification  open={this.state.error} message="Title cannot be left blank."/>
+				    		<MuiThemeProvider>
+								<Snackbar
+						          open={this.state.error}
+						          message="Title cannot be left blank."
+						          autoHideDuration={4000}
+						          onRequestClose={this.handleRequestClose}
+	        					/>
+        					</MuiThemeProvider>
 			    		</Col>
 		    		</Row>
 	    		</Grid>

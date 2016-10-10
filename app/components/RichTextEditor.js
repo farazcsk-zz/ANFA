@@ -120,7 +120,6 @@ class RichTextEditor extends Component {
           						onChange={this.onChange}
           						readOnly={false}
           						spellCheck={true}
-
       						/>
           				</Col>
           			</Row>

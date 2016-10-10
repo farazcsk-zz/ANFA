@@ -11,8 +11,8 @@ import Divider from 'material-ui/Divider';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
-import TastyNotification from './TastyNotification';
 import CircularProgress from 'material-ui/CircularProgress';
+import Snackbar from 'material-ui/Snackbar';
 
 
 class TaskCreator extends Component {
@@ -28,7 +28,8 @@ class TaskCreator extends Component {
 	  		wrongAnswers: ['', '', ''],
 	  		sectionId: this.props.params.sectionId
 	  	},
-	  	loading: false
+	  	loading: false,
+	  	error: false
 
 	  };
 	  this.onNameChange = this.onNameChange.bind(this);
@@ -37,8 +38,15 @@ class TaskCreator extends Component {
 	  this.handleSubmit = this.handleSubmit.bind(this);
 	  this.handleTypeChange = this.handleTypeChange.bind(this);
 	  this.onInstructionsChange = this.onInstructionsChange.bind(this);
+	  this.handleErrorRequestClose = this.handleErrorRequestClose.bind(this);
 
 	}
+
+	handleErrorRequestClose()  {
+	    this.setState({
+	      open: false,
+	    });
+  	};
 
 	onInstructionsChange(instructions) {
 		this.setState({
@@ -143,11 +151,18 @@ class TaskCreator extends Component {
 		      	browserHistory.push('/worksheet/' + this.props.params.worksheetId);
 		      }.bind(this),
 		      error: function(xhr, status, err) {
+		      	this.setState({
+					error:true,
+					loading: false
+				});
 		        console.error(this.props.url, status, err.toString());
 		      }.bind(this)
     		});
 		} else {
-			this.setState({error:true});
+			this.setState({
+				error:true,
+				loading: false
+			});
 		}
 		
 	}
@@ -314,7 +329,14 @@ class TaskCreator extends Component {
 								</div>
 							}
 	        			</Col>
-	        			<TastyNotification  open={this.state.error} message="Instructions cannot be left blank."/>
+	        			<MuiThemeProvider>
+							<Snackbar
+					          open={this.state.error}
+					          message="Instructions cannot be left blank."
+					          autoHideDuration={4000}
+					          onRequestClose={this.handleRequestClose}
+							/>
+						</MuiThemeProvider>
 					</Row>
 	    		</Grid>
 			</div>

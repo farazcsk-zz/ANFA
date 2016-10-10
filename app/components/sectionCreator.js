@@ -8,8 +8,8 @@ import Divider from 'material-ui/Divider';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
-import TastyNotification from './TastyNotification';
 import CircularProgress from 'material-ui/CircularProgress';
+import Snackbar from 'material-ui/Snackbar';
 
 class SectionCreator extends Component {
 	constructor(props) {
@@ -20,14 +20,22 @@ class SectionCreator extends Component {
 	  	section: {
 	  		title: ''
 	  	},
-	  	loading: false
+	  	loading: false,
+	  	error: false
 	  };
 
 	  this.handleOpen = this.handleOpen.bind(this);
 	  this.handleClose = this.handleClose.bind(this);
 	  this.onTitleChange = this.onTitleChange.bind(this);
 	  this.handleSubmit = this.handleSubmit.bind(this);
+	  this.handleErrorRequestClose = this.handleErrorRequestClose.bind(this);
 	}
+
+	handleErrorRequestClose()  {
+	    this.setState({
+	      open: false,
+	    });
+  	};
 
 	handleSubmit(e) {
 		this.setState({loading: true});
@@ -43,11 +51,18 @@ class SectionCreator extends Component {
 		      	this.handleClose()
 		      }.bind(this),
 		      error: function(xhr, status, err) {
+		      	this.setState({
+		      		error: true,
+		      		loading: false
+	      		})
 		        console.error(this.props.url, status, err.toString());
 		      }.bind(this)
 	    	});
 		} else {
-			this.setState({error: true})
+			this.setState({
+	      		error: true,
+	      		loading: false
+      		})
 		}
 		
 	}
@@ -138,9 +153,16 @@ class SectionCreator extends Component {
 							</MuiThemeProvider> 
 						</div>
 					}
-				  	
+					
     			</Dialog>
-    			<TastyNotification  open={this.state.error} message="Title cannot be left blank."/>
+    			<MuiThemeProvider>
+					<Snackbar
+			          open={this.state.error}
+			          message="Title cannot be left blank."
+			          autoHideDuration={4000}
+			          onRequestClose={this.handleRequestClose}
+					/>
+				</MuiThemeProvider>
 			</div>
 		)
 	}
