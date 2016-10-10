@@ -27,8 +27,8 @@ class TaskEditor extends Component {
 	  		answer: '',
 	  		wrongAnswers: ['', '', ''],
 	  		sectionId: this.props.params.sectionId
-	  	}
-
+	  	},
+	  	loading: false
 	  };
 
 	  this.onNameChange = this.onNameChange.bind(this);
@@ -151,7 +151,7 @@ class TaskEditor extends Component {
   	};
 	
 	handleSubmit(e) {
-
+		this.setState({loading:true});
 		if(this.state.task.instructions.length > 0) {
 			console.log(this.state.task)
 			e.preventDefault();
@@ -317,22 +317,31 @@ class TaskEditor extends Component {
 			        		</MuiThemeProvider> : null }
 	        			</Col>
 	        			<Col md={2}>
-	        				<MuiThemeProvider>
-	        					<FlatButton 
-									style={borderStyle}
-									rippleColor={buttonStyles.rippleColor} 
-									backgroundColor={buttonStyles.backgroundColor} 
-									labelStyle={buttonStyles.labelStyle}
-									hoverColor={buttonStyles.backgroundColor} 
-									label="Save" 
-									onClick={this.handleSubmit} 
-								/>
+	        				{!this.state.loading ?
+		        				<div>
+			        				 <MuiThemeProvider>
+			        					<FlatButton 
+											style={borderStyle}
+											rippleColor={buttonStyles.rippleColor} 
+											backgroundColor={buttonStyles.backgroundColor} 
+											labelStyle={buttonStyles.labelStyle}
+											hoverColor={buttonStyles.backgroundColor} 
+											label="Save" 
+											onClick={this.handleSubmit} 
+										/>
 
-							</MuiThemeProvider>
-							<br />
-							<MuiThemeProvider>
-								<CircularProgress />
-							</MuiThemeProvider>
+									</MuiThemeProvider>
+								</div> : 
+								<div>
+									<MuiThemeProvider>
+										<CircularProgress 
+											size={0.5} 
+											color='#36BA93'
+											style={{marginLeft: 15}} 
+										/>
+									</MuiThemeProvider> 
+								</div>
+							}
 	        			</Col>
 	        			<TastyNotification  open={this.state.error} message="Instructions cannot be left blank."/>
 					</Row>

@@ -27,7 +27,8 @@ class TaskCreator extends Component {
 	  		answer: '',
 	  		wrongAnswers: ['', '', ''],
 	  		sectionId: this.props.params.sectionId
-	  	}
+	  	},
+	  	loading: false
 
 	  };
 	  this.onNameChange = this.onNameChange.bind(this);
@@ -287,21 +288,31 @@ class TaskCreator extends Component {
 			        		</MuiThemeProvider> : null }
 	        			</Col>
 	        			<Col md={2}>
-	        				<MuiThemeProvider>
-	        					<FlatButton 
-									style={borderStyle}
-									rippleColor={buttonStyles.rippleColor} 
-									backgroundColor={buttonStyles.backgroundColor} 
-									labelStyle={buttonStyles.labelStyle}
-									hoverColor={buttonStyles.backgroundColor} 
-									label="Save" 
-									onClick={this.handleSubmit} 
-								/>
-								 
-							</MuiThemeProvider>
-							<MuiThemeProvider>
-								<CircularProgress />
-							</MuiThemeProvider>
+	        				{!this.state.loading ?
+		        				<div>
+			        				 <MuiThemeProvider>
+			        					<FlatButton 
+											style={borderStyle}
+											rippleColor={buttonStyles.rippleColor} 
+											backgroundColor={buttonStyles.backgroundColor} 
+											labelStyle={buttonStyles.labelStyle}
+											hoverColor={buttonStyles.backgroundColor} 
+											label="Save" 
+											onClick={this.handleSubmit} 
+										/>
+
+									</MuiThemeProvider>
+								</div> : 
+								<div>
+									<MuiThemeProvider>
+										<CircularProgress 
+											size={0.5} 
+											color='#36BA93'
+											style={{marginLeft: 15}} 
+										/>
+									</MuiThemeProvider> 
+								</div>
+							}
 	        			</Col>
 	        			<TastyNotification  open={this.state.error} message="Instructions cannot be left blank."/>
 					</Row>
