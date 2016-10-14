@@ -29,8 +29,10 @@ class TaskEditor extends Component {
 	  		sectionId: this.props.params.sectionId
 	  	},
 	  	loading: false,
-	  	error: false
+	  	error: false,
+	  	initialInstructions: ''
 	  };
+
 
 	  this.onNameChange = this.onNameChange.bind(this);
 	  this.onAnswerChange = this.onAnswerChange.bind(this);
@@ -53,7 +55,7 @@ class TaskEditor extends Component {
 	      dataType: 'json',
 	      success: function(data) {
 	      	console.log(data);
-	      	this.setState({task: data});
+	      	this.setState({task: data, initialInstructions: data.instructions});
 	      }.bind(this),
 	      error: function(xhr, status, err) {
 	        console.error(this.props.url, status, err.toString());
@@ -268,7 +270,7 @@ class TaskEditor extends Component {
 
 							<RichTextEditor 
 								updateInstructions={this.onInstructionsChange} 
-								taskId={this.state.task.id} 
+								instructions={this.state.initialInstructions} 
 							/>
 
 			        		{this.state.task.type != 'Learn' ? <MuiThemeProvider>
