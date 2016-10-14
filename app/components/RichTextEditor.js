@@ -21,7 +21,8 @@ class RichTextEditor extends Component {
 	  super(props);
 	
 	  this.state = {
-	  	editorState: EditorState.createEmpty()
+	  	editorState: EditorState.createEmpty(),
+	  	instructionsInitialised: false
 	  };
 	  this.onChange = (editorState) => {
 	  	this.setState({editorState})
@@ -32,20 +33,9 @@ class RichTextEditor extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if(nextProps.taskId !== this.props.taskId) {
-			$.ajax({
-		      url: "http://localhost:3000/api/Tasks/" + nextProps.taskId,
-		      dataType: 'json',
-		      success: function(data) {
-		      	console.log(data);
-		      	var contentState = stateFromHTML(data.instructions);
-				this.setState({editorState: EditorState.createWithContent(contentState)});
-		      }.bind(this),
-		      error: function(xhr, status, err) {
-		        console.error(this.props.url, status, err.toString());
-		      }.bind(this)
-			});
-		}
+		if(nextProps.instructions && !this.state.instructionsInitialised) {
+			this.setState({editorState: EditorState.createWithContent(stateFromHTML(nextProps.instructions)),instructionsInitialised: true});
+		}		
 	}
 
 	handleKeyCommand(command) {
