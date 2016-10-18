@@ -15,7 +15,7 @@ import Snackbar from 'material-ui/Snackbar';
 class WorksheetCreator extends Component {
 	constructor(props) {
 	  super(props);
-	
+
 	  this.state = {
 	  	worksheet:{
 	  		title: '',
@@ -23,7 +23,7 @@ class WorksheetCreator extends Component {
 	  	},
 	  	loading: false,
 	  	error: false
-	  	
+
 	  };
 
 	  this.onTitleChange = this.onTitleChange.bind(this);
@@ -105,7 +105,7 @@ class WorksheetCreator extends Component {
 		const titleInputStyle = {
 			float: 'left',
 			marginLeft: '5vw',
-			fontSize: '4vh',
+			fontSize: '3.5vh',
 			marginTop: '4vh'
 		}
 
@@ -160,61 +160,61 @@ class WorksheetCreator extends Component {
 								<Paper style={paperStyle} zDepth={3}>
 									<Row className="show-grid">
 										<Col md={10}>
-				          					<TextField 
+				          					<TextField
 				          						id="Title"
 				          						style={titleInputStyle}
 				          						underlineFocusStyle={inputStyles.underlineStyle}
-												floatingLabelFocusStyle={inputStyles.floatingLabelFocusStyle} 
-				          						placeholder="Enter Worksheet Title" 
+												floatingLabelFocusStyle={inputStyles.floatingLabelFocusStyle}
+				          						placeholder="Enter Worksheet Title"
 				          						underlineShow={false}
 				          						onChange={this.onTitleChange}
 			          						/>
 						          			<hr style={hrStyle}/>
-				          					<TextField 
+				          					<TextField
 				          						id="Desciption"
 				          						style={descInputStyle}
 				          						underlineFocusStyle={inputStyles.underlineStyle}
-												floatingLabelFocusStyle={inputStyles.floatingLabelFocusStyle} 
+												floatingLabelFocusStyle={inputStyles.floatingLabelFocusStyle}
 				          						placeholder="Enter Worksheet Description"
-				          						underlineShow={false} 
+				          						underlineShow={false}
 				          						onChange={this.onDescriptionChange}
 			          						/>
 		          						</Col>
-		          						<Col md={2}>	
+		          						<Col md={2}>
 											{!this.state.loading ?
 							    				<div>
 							        				 <MuiThemeProvider>
-							        					<FlatButton 
+							        					<FlatButton
 															label="Create"
 															style={borderStyle}
-															rippleColor={buttonStyles.rippleColor} 
-															backgroundColor={buttonStyles.backgroundColor} 
+															rippleColor={buttonStyles.rippleColor}
+															backgroundColor={buttonStyles.backgroundColor}
 															labelStyle={buttonStyles.labelStyle}
-															hoverColor={buttonStyles.backgroundColor} 
-															onClick={this.handleSubmit} 
+															hoverColor={buttonStyles.backgroundColor}
+															onClick={this.handleSubmit}
 														/>
 													</MuiThemeProvider>
-													
+
 													<MuiThemeProvider>
-														<FlatButton 
+														<FlatButton
 															label="Cancel"
 															style={darkBorderStyle}
-															rippleColor={darkButtonStyles.rippleColor} 
-															backgroundColor={darkButtonStyles.backgroundColor} 
+															rippleColor={darkButtonStyles.rippleColor}
+															backgroundColor={darkButtonStyles.backgroundColor}
 															labelStyle={darkButtonStyles.labelStyle}
-															hoverColor={darkButtonStyles.backgroundColor} 
-															onClick={this.handleCancel} 
+															hoverColor={darkButtonStyles.backgroundColor}
+															onClick={this.handleCancel}
 														/>
 													</MuiThemeProvider>
-												</div> : 
+												</div> :
 												<div>
 													<MuiThemeProvider>
-														<CircularProgress 
-															size={0.5} 
+														<CircularProgress
+															size={0.5}
 															color='#36BA93'
-															style={{marginLeft: 15}} 
+															style={{marginLeft: 15}}
 														/>
-													</MuiThemeProvider> 
+													</MuiThemeProvider>
 												</div>
 											}
 										</Col>

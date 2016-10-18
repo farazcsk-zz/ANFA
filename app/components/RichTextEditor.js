@@ -35,13 +35,15 @@ class RichTextEditor extends Component {
 	componentWillReceiveProps(nextProps) {
 		if(nextProps.instructions && !this.state.instructionsInitialised) {
 			this.setState({editorState: EditorState.createWithContent(stateFromHTML(nextProps.instructions)),instructionsInitialised: true});
-		}		
+		}
 	}
 
 	handleKeyCommand(command) {
+		console.log(command)
 	    const newState = RichUtils.handleKeyCommand(this.state.editorState, command);
 	    if (newState) {
 	      this.onChange(newState);
+	      console.log('all is well');
 	      return 'handled';
 	    }
 	    return 'not-handled';

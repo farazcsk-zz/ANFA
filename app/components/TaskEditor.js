@@ -160,6 +160,7 @@ class TaskEditor extends Component {
   	};
 	
 	handleSubmit(e) {
+		console.log(this.state.instructions.length)
 		this.setState({loading:true});
 		if(this.state.task.instructions.length > 0) {
 			console.log(this.state.task)
