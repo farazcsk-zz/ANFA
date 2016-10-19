@@ -14,7 +14,7 @@ import Snackbar from 'material-ui/Snackbar';
 class Login extends Component {
 	constructor(props) {
 	  super(props);
-	
+
 	  this.state = {
 	  	details: {
 	  		username: '',
@@ -23,12 +23,12 @@ class Login extends Component {
 
 	  	error: false,
 	  	loading: false
-	  	
+
 	  };
 
 	  this.onUsernameChange = this.onUsernameChange.bind(this);
 	  this.onPasswordChange = this.onPasswordChange.bind(this);
-	  this.handleSubmit = this.handleSubmit.bind(this); 
+	  this.handleSubmit = this.handleSubmit.bind(this);
 	  this.handleErrorRequestClose = this.handleErrorRequestClose.bind(this);
 	}
 
@@ -80,7 +80,7 @@ class Login extends Component {
 	    });
   	};
 
-	
+
 	render() {
 		const paperStyle = {
 		  height: 350,
@@ -137,21 +137,22 @@ class Login extends Component {
 									<Row className="show-grid">
 										<Col md={1}>
 											<Paper style={circlePaperStyle} zDepth={1} circle={true} />
-										</Col> 
+										</Col>
 										<Col md={6} mdOffset={2}>
-											<TextField 
+											<TextField
 												underlineFocusStyle={inputStyles.underlineStyle}
-												floatingLabelFocusStyle={inputStyles.floatingLabelFocusStyle} 
-												id="Username" 
-												floatingLabelText="Username" 
+												floatingLabelFocusStyle={inputStyles.floatingLabelFocusStyle}
+												id="Username"
+												floatingLabelText="Username"
 												onChange={this.onUsernameChange}
 											/>
 											<br />
-											<TextField 
+											<TextField
 												underlineFocusStyle={inputStyles.underlineStyle}
 												floatingLabelFocusStyle={inputStyles.floatingLabelFocusStyle}
-												id="Password" 
-												floatingLabelText="Password" 
+												id="Password"
+												type="password"
+												floatingLabelText="Password"
 												onChange={this.onPasswordChange}
 											/>
 										</Col>
@@ -161,29 +162,29 @@ class Login extends Component {
 									{!this.state.loading ?
 					    				<div>
 					        				 <MuiThemeProvider>
-					        					<FlatButton 
+					        					<FlatButton
 													style={borderStyle}
-													rippleColor={buttonStyles.rippleColor} 
-													backgroundColor={buttonStyles.backgroundColor} 
+													rippleColor={buttonStyles.rippleColor}
+													backgroundColor={buttonStyles.backgroundColor}
 													labelStyle={buttonStyles.labelStyle}
-													hoverColor={buttonStyles.backgroundColor} 
-													label="Login" 
-													onClick={this.handleSubmit} 
+													hoverColor={buttonStyles.backgroundColor}
+													label="Login"
+													onClick={this.handleSubmit}
 												/>
 
 											</MuiThemeProvider>
-										</div> : 
+										</div> :
 										<div>
 											<MuiThemeProvider>
-												<CircularProgress 
-													size={0.5} 
+												<CircularProgress
+													size={0.5}
 													color='#36BA93'
-													style={{marginLeft: 15}} 
+													style={{marginLeft: 15}}
 												/>
-											</MuiThemeProvider> 
+											</MuiThemeProvider>
 										</div>
 									}
-									
+
 								</Paper>
 							</MuiThemeProvider>
 							<MuiThemeProvider>
