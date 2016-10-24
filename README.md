@@ -4,6 +4,4 @@
 `npm start`
 
 # login 
-
-Useranme: `faraz`
-Password: `123`
+make sure you run the ANFA API and create a user.
